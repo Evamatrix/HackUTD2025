@@ -132,7 +132,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
     }
   };
 
-  const totalPortfolioValue = portfolio + investments.reduce((sum, item) => sum + item.amount, 0);
+  const totalPortfolioValue = portfolio + investments.reduce((sum: any, item: { amount: any; }) => sum + item.amount, 0);
   const totalReturn = ((totalPortfolioValue - 1000) / 1000) * 100;
 
   return (
