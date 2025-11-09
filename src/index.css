@@ -323,6 +323,10 @@
     height: auto;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   button, input, select, optgroup, textarea {
     font: inherit;
     font-feature-settings: inherit;

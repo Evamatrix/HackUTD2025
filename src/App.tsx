@@ -8,6 +8,7 @@ import { MoneyMatchGame } from './components/MoneyMatchGame';
 import { InvestingGame } from './components/InvestingGame';
 import { DebtGame } from './components/DebtGame';
 import { MortgageGame } from './components/MortgageGame';
+import AuthMenu from "./components/AuthMenu";
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'dashboard' | 'savings' | 'budget' | 'wantvsneed' | 'moneymatch' | 'investing' | 'debt' | 'mortgage'>('dashboard');
@@ -118,6 +119,7 @@ export default function App() {
                 </h1>
                 <p className="text-sm text-emerald-100 tracking-wide">POWERED BY CAPITAL ONE</p>
               </div>
+              <AuthMenu />
             </div>
             <div className="flex items-center gap-3">
               <button
