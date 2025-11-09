@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, DollarSign } from 'lucide-react';
+import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
@@ -58,11 +59,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
   const progress = (spent / budget) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-white hover:text-white hover:bg-white/10">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Dashboard
-      </Button>
+    <div className="max-w-4xl mx-auto relative">
+      {/* Place back button in the page (not floating) with dark tone so it stands out on white */}
+      <GameBackButton onClick={onBack} tone="dark" className="mb-4" />
 
       <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
@@ -170,7 +169,7 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                     : 'Aim to use most of your budget while staying within limits!'}
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] text-lg px-8 py-6 shadow-xl">
+              <Button onClick={onBack} className="bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
                 Back to Dashboard
               </Button>
             </div>

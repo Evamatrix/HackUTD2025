@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Scale } from 'lucide-react';
+import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 
@@ -59,11 +60,9 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-white hover:text-white hover:bg-white/10">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Dashboard
-      </Button>
+    <div className="max-w-4xl mx-auto relative">
+      {/* Inline back button (removed floating) */}
+      <GameBackButton onClick={onBack} tone="dark" className="mb-4" />
 
       <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-[#DA2032] to-[#B01828] text-white border-b-4 border-white/20">
@@ -149,7 +148,7 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
                   💡 Pro Tip: Understanding wants vs needs is key to smart spending!
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-lg px-8 py-6 shadow-xl">
+              <Button onClick={onBack} className="bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
                 Back to Dashboard
               </Button>
             </div>

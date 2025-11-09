@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, AlertTriangle, Heart, DollarSign } from 'lucide-react';
+import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
@@ -166,11 +167,8 @@ export function DebtGame({ onBack, onComplete }: DebtGameProps) {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-emerald-800 hover:text-emerald-900 hover:bg-emerald-100">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Garden
-      </Button>
+    <div className="max-w-5xl mx-auto relative">
+      <GameBackButton onClick={onBack} floating />
 
       <Card className="border-4 border-rose-300 bg-gradient-to-br from-white to-rose-50 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-rose-500 to-pink-600 text-white border-b-4 border-rose-700">

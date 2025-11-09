@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Home } from 'lucide-react';
+import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 
@@ -72,11 +73,9 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
   const selectedMortgage = mortgageOptions.find(opt => opt.id === selectedOption);
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-emerald-800 hover:text-emerald-900 hover:bg-emerald-100">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Garden
-      </Button>
+    <div className="max-w-5xl mx-auto relative">
+      {/* Inline back button (not floating) placed within page flow for consistency */}
+      <GameBackButton onClick={onBack} tone="dark" className="mb-4" />
 
       <Card className="border-4 border-blue-300 bg-gradient-to-br from-white to-blue-50 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-b-4 border-blue-700">
