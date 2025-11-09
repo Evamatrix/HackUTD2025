@@ -33,7 +33,11 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          # Optional: provide a personal access token (create secret GH_PAGES_PAT in repo settings)
+          # If your organization or repo blocks GITHUB_TOKEN from pushing, create a PAT with repo:public_repo
+          # and set it as a secret named GH_PAGES_PAT. The action will use it when present.
+          personal_token: ${{ secrets.GH_PAGES_PAT }}
+          publish_dir: ./dist
