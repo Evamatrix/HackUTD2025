@@ -92,14 +92,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-      {/* Decorative nature elements */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-10 left-10 text-6xl opacity-20">🌿</div>
-        <div className="absolute top-20 right-20 text-5xl opacity-20">🍃</div>
-        <div className="absolute bottom-20 left-20 text-7xl opacity-20">🌱</div>
-        <div className="absolute bottom-10 right-10 text-6xl opacity-20">🌺</div>
-      </div>
-
       {/* Header */}
       <header className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-2xl border-b-4 border-amber-500 relative">
         <div className="container mx-auto px-4 py-6">
