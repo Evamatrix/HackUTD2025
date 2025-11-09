@@ -358,7 +358,6 @@ body, p, span, label, button, input, textarea {
   }
 
   img, svg, video, canvas, audio, iframe, embed, object {
-    vertical-align: middle;
     display: block;
   }
 
