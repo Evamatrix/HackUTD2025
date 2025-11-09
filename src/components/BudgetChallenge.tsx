@@ -169,7 +169,7 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                     : 'Aim to use most of your budget while staying within limits!'}
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
+              <Button onClick={onBack} className="bg-gradient-to-r from-[#000] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
                 Back to Dashboard
               </Button>
             </div>

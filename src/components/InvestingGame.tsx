@@ -354,7 +354,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                   The earlier you start investing, the more time your money has to grow through compound returns!
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
+              <Button onClick={onBack} className="bg-gradient-to-r from-[#000] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
                 Back to Dashboard
               </Button>
             </div>
