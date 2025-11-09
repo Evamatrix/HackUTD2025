@@ -7,9 +7,20 @@ import { MoneyMatchGame } from './components/MoneyMatchGame';
 import { InvestingGame } from './components/InvestingGame';
 import { DebtGame } from './components/DebtGame';
 import { MortgageGame } from './components/MortgageGame';
+import { ChatbotButton } from './components/ui/ChatbotButton'; // ✅ Import chatbot
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<'dashboard' | 'savings' | 'budget' | 'wantvsneed' | 'moneymatch' | 'investing' | 'debt' | 'mortgage'>('dashboard');
+  const [currentView, setCurrentView] = useState<
+    | 'dashboard'
+    | 'savings'
+    | 'budget'
+    | 'wantvsneed'
+    | 'moneymatch'
+    | 'investing'
+    | 'debt'
+    | 'mortgage'
+  >('dashboard');
+
   const [userProgress, setUserProgress] = useState({
     totalPoints: 0,
     badges: [] as string[],
@@ -21,15 +32,14 @@ export default function App() {
       investing: 0,
       debt: 0,
       mortgage: 0,
-    }
+    },
   });
 
-  // Load progress from localStorage
+  // 🔹 Load progress from localStorage
   useEffect(() => {
     const savedProgress = localStorage.getItem('financialLiteracyProgress');
     if (savedProgress) {
       const parsed = JSON.parse(savedProgress);
-      // Ensure all game types exist with default values
       setUserProgress({
         totalPoints: parsed.totalPoints || 0,
         badges: parsed.badges || [],
@@ -41,39 +51,40 @@ export default function App() {
           investing: parsed.gamesCompleted?.investing || 0,
           debt: parsed.gamesCompleted?.debt || 0,
           mortgage: parsed.gamesCompleted?.mortgage || 0,
-        }
+        },
       });
     }
   }, []);
 
-  // Save progress to localStorage
+  // 🔹 Save progress to localStorage
   useEffect(() => {
     localStorage.setItem('financialLiteracyProgress', JSON.stringify(userProgress));
   }, [userProgress]);
 
+  // 🔹 Utility functions
   const addPoints = (points: number) => {
-    setUserProgress(prev => ({
+    setUserProgress((prev) => ({
       ...prev,
-      totalPoints: prev.totalPoints + points
+      totalPoints: prev.totalPoints + points,
     }));
   };
 
   const completeGame = (gameType: keyof typeof userProgress.gamesCompleted) => {
-    setUserProgress(prev => ({
+    setUserProgress((prev) => ({
       ...prev,
       gamesCompleted: {
         ...prev.gamesCompleted,
-        [gameType]: prev.gamesCompleted[gameType] + 1
-      }
+        [gameType]: prev.gamesCompleted[gameType] + 1,
+      },
     }));
   };
 
   const addBadge = (badge: string) => {
-    setUserProgress(prev => {
+    setUserProgress((prev) => {
       if (!prev.badges.includes(badge)) {
         return {
           ...prev,
-          badges: [...prev.badges, badge]
+          badges: [...prev.badges, badge],
         };
       }
       return prev;
@@ -81,8 +92,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-      {/* Decorative nature elements */}
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative">
+      {/* 🌿 Decorative background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-10 left-10 text-6xl opacity-20">🌿</div>
         <div className="absolute top-20 right-20 text-5xl opacity-20">🍃</div>
@@ -90,22 +101,30 @@ export default function App() {
         <div className="absolute bottom-10 right-10 text-6xl opacity-20">🌺</div>
       </div>
 
-      {/* Header */}
-      <header className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-2xl border-b-4 border-amber-500 relative">
+      {/* 🌈 Header */}
+      <header className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-2xl border-b-4 border-amber-500 relative z-10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
+            {/* Left side */}
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
-                <img src="/assets/icons/main-cat.svg" alt="Main Cat" className="w-12 h-12 object-contain" />
+                <img
+                  src="/assets/icons/main-cat.svg"
+                  alt="Main Cat"
+                  className="w-12 h-12 object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-3xl tracking-tight flex items-center gap-2">
-                  Capital Meow-ney 
-                  <span className="text-2xl">🐾</span>
+                  Capital Meow-ney <span className="text-2xl">🐾</span>
                 </h1>
-                <p className="text-sm text-emerald-100 tracking-wide">POWERED BY CAPITAL ONE</p>
+                <p className="text-sm text-emerald-100 tracking-wide">
+                  POWERED BY CAPITAL ONE
+                </p>
               </div>
             </div>
+
+            {/* Right side stats */}
             <div className="flex items-center gap-3">
               <div className="bg-gradient-to-br from-amber-400 to-amber-600 px-6 py-3 rounded-2xl shadow-lg border-2 border-amber-300 hover:scale-105 transition-transform">
                 <p className="text-xs text-amber-900 uppercase tracking-wide">Catnip Points</p>
@@ -124,106 +143,92 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      {/* 🧩 Main Content */}
+      <main className="container mx-auto px-4 py-8 relative z-10">
         {currentView === 'dashboard' && (
-          <Dashboard 
-            userProgress={userProgress}
-            onSelectGame={setCurrentView}
-          />
+          <Dashboard userProgress={userProgress} onSelectGame={setCurrentView} />
         )}
-        
+
         {currentView === 'savings' && (
-          <SavingsGame 
+          <SavingsGame
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('savings');
-              if (userProgress.gamesCompleted.savings === 0) {
-                addBadge('First Saver');
-              }
+              if (userProgress.gamesCompleted.savings === 0) addBadge('First Saver');
             }}
           />
         )}
-        
+
         {currentView === 'budget' && (
-          <BudgetChallenge 
+          <BudgetChallenge
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('budget');
-              if (userProgress.gamesCompleted.budget === 0) {
-                addBadge('Budget Boss');
-              }
+              if (userProgress.gamesCompleted.budget === 0) addBadge('Budget Boss');
             }}
           />
         )}
-        
+
         {currentView === 'wantvsneed' && (
-          <WantVsNeedGame 
+          <WantVsNeedGame
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('wantvsneed');
-              if (userProgress.gamesCompleted.wantvsneed === 0) {
-                addBadge('Smart Spender');
-              }
+              if (userProgress.gamesCompleted.wantvsneed === 0) addBadge('Smart Spender');
             }}
           />
         )}
-        
+
         {currentView === 'moneymatch' && (
-          <MoneyMatchGame 
+          <MoneyMatchGame
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('moneymatch');
-              if (userProgress.gamesCompleted.moneymatch === 0) {
-                addBadge('Money Matcher');
-              }
+              if (userProgress.gamesCompleted.moneymatch === 0) addBadge('Money Matcher');
             }}
           />
         )}
-        
+
         {currentView === 'investing' && (
-          <InvestingGame 
+          <InvestingGame
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('investing');
-              if (userProgress.gamesCompleted.investing === 0) {
-                addBadge('Future Investor');
-              }
+              if (userProgress.gamesCompleted.investing === 0) addBadge('Future Investor');
             }}
           />
         )}
-        
+
         {currentView === 'debt' && (
-          <DebtGame 
+          <DebtGame
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('debt');
-              if (userProgress.gamesCompleted.debt === 0) {
-                addBadge('Debt Destroyer');
-              }
+              if (userProgress.gamesCompleted.debt === 0) addBadge('Debt Destroyer');
             }}
           />
         )}
-        
+
         {currentView === 'mortgage' && (
-          <MortgageGame 
+          <MortgageGame
             onBack={() => setCurrentView('dashboard')}
             onComplete={(points) => {
               addPoints(points);
               completeGame('mortgage');
-              if (userProgress.gamesCompleted.mortgage === 0) {
-                addBadge('Home Helper');
-              }
+              if (userProgress.gamesCompleted.mortgage === 0) addBadge('Home Helper');
             }}
           />
         )}
       </main>
+
+      {/* 💬 Persistent Gemini Chatbot */}
+      <ChatbotButton /> 
     </div>
   );
 }
