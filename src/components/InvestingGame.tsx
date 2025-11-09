@@ -276,9 +276,9 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                           : 'border-white/10 bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105'
                       }`}
                     >
-                      <div className="text-4xl mb-3 ">{investment.emoji}</div>
-                      <p className="text-white mb-1 text-primary">{investment.name}</p>
-                      <p className="text-sm text-blue-500 mb-2">{investment.description}</p>
+                      <div className="text-4xl mb-3">{investment.emoji}</div>
+                      <p className="text-black mb-1">{investment.name}</p>
+                      <p className="text-sm text-blue-300 mb-2">{investment.description}</p>
                       <div className="flex items-center justify-between text-sm">
                         <span className={getRiskColor(investment.risk)}>{investment.risk} risk</span>
                         <span className="text-green-400">
