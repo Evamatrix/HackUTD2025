@@ -5,7 +5,7 @@
 
   ## Running the code
   
-  Run 'npm install @auth0/auth0-react' to install the Autho0 dependency.
+  Run `npm install @auth0/auth0-react` to install the Autho0 dependency.
 
   Run `npm i` to install the dependencies.
 
