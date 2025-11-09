@@ -18,6 +18,9 @@ module.exports = {
       scale: {
         102: "1.02",
       },
+      fontFamily: {
+        'press-start': ['"Press Start 2P"', 'cursive']
+      },
     },
   },
   plugins: [],

@@ -1,4 +1,48 @@
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Tailwind base layers: include only once, at the start of your CSS entry point */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Load DePixelKlein font */
+@font-face {
+  font-family: 'DePixelKlein';
+  src: url('/assets/DePixelKlein.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1,h2 {
+  font-family: 'Press Start 2P', cursive !important;
+}
+h3, h4, h5, h6 {
+  font-family: 'DePixelKlein', monospace !important;
+}
+
+/* Set Comic Sans for normal text, paragraphs, etc. */
+body, p, span, label, button, input, textarea {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif !important;
+}
+
+/* Heading sizes (customize as you like) */
+h1 { font-size: 1.7rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4, h5, h6 { font-size: 1.2rem; }
+
+
+
+/* Body and normal/document text: keep Tailwind default sans-serif for readability */
+body, p, span, label, button, input, textarea {
+  font-family: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+/* You can add custom global styles below */
+
 @layer properties {
   @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
     *, :before, :after, ::backdrop {

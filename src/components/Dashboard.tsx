@@ -101,10 +101,10 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       {/* Welcome Section */}
       <div className="text-center space-y-4 py-8">
         <h2 className="text-5xl text-emerald-900 tracking-tight flex items-center justify-center gap-3">
-          Welcome to the Garden 🌿
+          Welcome to the Garden!
         </h2>
         <p className="text-xl text-teal-700 max-w-2xl mx-auto">
-          Help our cat friends learn about money while exploring nature
+          Help our cat friends learn about money while exploring nature 
         </p>
       </div>
 
