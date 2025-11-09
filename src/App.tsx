@@ -110,7 +110,7 @@ export default function App() {
                 className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform cursor-pointer"
                 aria-label="Return to Dashboard"
               >
-                <img src="/assets/icons/main-cat.svg" alt="Main Cat" className="w-12 h-12 object-contain" />
+                <img src="assets/icons/main-cat.svg" alt="Main Cat" className="w-12 h-12 object-contain" />
               </button>
               <div>
                 <h1 className="text-3xl tracking-tight flex items-center gap-2">
