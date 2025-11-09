@@ -75,7 +75,7 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
   return (
     <div className="max-w-5xl mx-auto relative">
       {/* Inline back button (not floating) placed within page flow for consistency */}
-      <GameBackButton onClick={onBack} tone="dark" className="mb-4" />
+      <GameBackButton onBack={onBack} />
 
       <Card className="border-4 border-blue-300 bg-gradient-to-br from-white to-blue-50 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-b-4 border-blue-700">
@@ -249,10 +249,6 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
                   🌳 Remember: Buying a home is a big decision! Take time to save for a good down payment and choose a loan you can afford.
                 </p>
               </div>
-
-              <Button onClick={onBack} className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-lg px-8 py-6 shadow-xl text-white">
-                Back to Garden
-              </Button>
             </div>
           )}
         </CardContent>

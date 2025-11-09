@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ArrowLeft, DollarSign } from 'lucide-react';
-import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
+import { GameBackButton } from './ui/GameBackButton';
 
-export interface BudgetChallengeProps {
+interface BudgetChallengeProps {
   onBack: () => void;
   onComplete: (points: number) => void;
 }
@@ -35,9 +35,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
   ];
 
   const handleItemClick = (item: Item) => {
-    if (selectedItems.some((i: Item) => i.name === item.name)) {
+    if (selectedItems.some(i => i.name === item.name)) {
       // Remove item
-      setSelectedItems(selectedItems.filter((i: Item) => i.name !== item.name));
+      setSelectedItems(selectedItems.filter(i => i.name !== item.name));
       setSpent(spent - item.cost);
     } else {
       // Add item if budget allows
@@ -59,9 +59,8 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
   const progress = (spent / budget) * 100;
 
   return (
-    <div className="max-w-4xl mx-auto relative">
-      {/* Place back button in the page (not floating) with dark tone so it stands out on white */}
-      <GameBackButton onClick={onBack} tone="dark" className="mb-4" />
+    <div className="max-w-4xl mx-auto">
+      <GameBackButton onBack={onBack} />
 
       <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
@@ -169,9 +168,6 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                     : 'Aim to use most of your budget while staying within limits!'}
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#000] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
-                Back to Dashboard
-              </Button>
             </div>
           )}
         </CardContent>

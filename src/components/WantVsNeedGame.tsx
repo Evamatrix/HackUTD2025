@@ -62,8 +62,7 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
   return (
     <div className="max-w-4xl mx-auto relative">
       {/* Inline back button (removed floating) */}
-      <GameBackButton onClick={onBack} tone="dark" className="mb-4" />
-
+      <GameBackButton onBack={onBack} />
       <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-[#DA2032] to-[#B01828] text-white border-b-4 border-white/20">
           <CardTitle className="flex items-center gap-3 text-2xl">
@@ -148,9 +147,6 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
                   💡 Pro Tip: Understanding wants vs needs is key to smart spending!
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#000] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-black hover:text-black focus:text-black text-lg px-8 py-6 shadow-xl">
-                Back to Dashboard
-              </Button>
             </div>
           )}
         </CardContent>

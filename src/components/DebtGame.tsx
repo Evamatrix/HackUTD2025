@@ -168,8 +168,7 @@ export function DebtGame({ onBack, onComplete }: DebtGameProps) {
 
   return (
     <div className="max-w-5xl mx-auto relative">
-      <GameBackButton onClick={onBack} floating />
-
+      <GameBackButton onBack={onBack} />
       <Card className="border-4 border-rose-300 bg-gradient-to-br from-white to-rose-50 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-rose-500 to-pink-600 text-white border-b-4 border-rose-700">
           <CardTitle className="flex items-center gap-3 text-2xl">
