@@ -277,7 +277,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                       }`}
                     >
                       <div className="text-4xl mb-3">{investment.emoji}</div>
-                      <p className="text-white mb-1">{investment.name}</p>
+                      <p className="text-black mb-1">{investment.name}</p>
                       <p className="text-sm text-blue-300 mb-2">{investment.description}</p>
                       <div className="flex items-center justify-between text-sm">
                         <span className={getRiskColor(investment.risk)}>{investment.risk} risk</span>
