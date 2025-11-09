@@ -8,10 +8,18 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-/* Load DePixelKlein font */
+/* Load PixGamer font */
 @font-face {
-  font-family: 'DePixelKlein';
-  src: url('/assets/DePixelKlein.otf') format('truetype');
+  font-family: 'PixGamer';
+  src: url('/assets/Pixgamer.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Load Pixeloid font */
+@font-face {
+  font-family: 'Pixeloid';
+  src: url('/assets/Pixeloid.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -19,8 +27,11 @@
 h1,h2 {
   font-family: 'Press Start 2P', cursive !important;
 }
-h3, h4, h5, h6 {
-  font-family: 'DePixelKlein', monospace !important;
+h3, h4 {
+  font-family: 'Pixeloid', monospace !important;
+}
+h5, h6 {
+  font-family: 'PixGamer', monospace !important;
 }
 
 /* Set Comic Sans for normal text, paragraphs, etc. */
@@ -32,7 +43,7 @@ body, p, span, label, button, input, textarea {
 h1 { font-size: 1.7rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
-h4, h5, h6 { font-size: 1.2rem; }
+h4, h5, h6 { font-size: 1.rem; }
 
 
 
