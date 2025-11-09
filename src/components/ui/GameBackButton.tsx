@@ -16,7 +16,7 @@ export function GameBackButton({ onBack }: GameBackButtonProps) {
       onMouseLeave={() => setBackHover(false)}
       className="mb-4 cursor-pointer transition-all duration-200 flex items-center text-primary"
       style={{
-        color: backHover ? "var(--color-gray-500)" : "inherit", // or your normal text color
+        color: backHover ? "var(--color-green-700)" : "inherit", // or your normal text color
         background: 'none',
         border: 'none',
         padding: 0,

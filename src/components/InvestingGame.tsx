@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { ArrowLeft, TrendingUp, ArrowUp, ArrowDown, Minus } from 'lucide-react';
+import { ArrowUp, ArrowDown } from 'lucide-react';
 import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
-import { Progress } from './ui/progress';
 
 interface InvestingGameProps {
   onBack: () => void;
@@ -24,21 +23,25 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
   const [year, setYear] = useState(1);
   const [portfolio, setPortfolio] = useState(1000);
   const [totalInvested, setTotalInvested] = useState(1000);
-  const [investments, setInvestments] = useState<{ investment: Investment; amount: number; yearBought: number }[]>([]);
+  const [investments, setInvestments] = useState<
+    { investment: Investment; amount: number; yearBought: number }[]
+  >([]);
   const [gameComplete, setGameComplete] = useState(false);
   const [selectedInvestment, setSelectedInvestment] = useState<Investment | null>(null);
   const [investAmount, setInvestAmount] = useState<number>(0);
-  const [yearHistory, setYearHistory] = useState<{ year: number; value: number; change: number }[]>([{ year: 0, value: 1000, change: 0 }]);
+  const [yearHistory, setYearHistory] = useState<{ year: number; value: number; change: number }[]>([
+    { year: 0, value: 1000, change: 0 },
+  ]);
 
   const availableInvestments: Investment[] = [
     {
-      name: 'Tech Stock',
+      name: 'New Tech Stock',
       type: 'stock',
       risk: 'high',
       description: 'High risk, high reward technology company',
       emoji: '📱',
-      minReturn: -20,
-      maxReturn: 40,
+      minReturn: -50,
+      maxReturn: 50,
     },
     {
       name: 'Blue Chip Stock',
@@ -46,8 +49,8 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
       risk: 'medium',
       description: 'Stable company with steady growth',
       emoji: '🏢',
-      minReturn: -5,
-      maxReturn: 15,
+      minReturn: -10,
+      maxReturn: 25,
     },
     {
       name: 'Government Bond',
@@ -72,52 +75,71 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
   const calculateReturn = (investment: Investment): number => {
     const range = investment.maxReturn - investment.minReturn;
     const random = Math.random();
-    return investment.minReturn + (range * random);
+    return investment.minReturn + range * random;
   };
 
   const nextYear = () => {
-    if (investments.length === 0) {
-      alert('You need to invest something first!');
-      return;
-    }
+  if (investments.length === 0) {
+    alert('You need to invest something first!');
+    return;
+  }
 
-    let newPortfolioValue = 0;
-    const updatedInvestments = investments.map(item => {
-      const returnRate = calculateReturn(item.investment);
-      const newAmount = item.amount * (1 + returnRate / 100);
-      newPortfolioValue += newAmount;
-      return { ...item, amount: newAmount };
-    });
+  // Step 1: Update investment returns
+  const updatedInvestments = investments.map(item => {
+    const returnRate = calculateReturn(item.investment);
+    const newAmount = item.amount * (1 + returnRate / 100);
+    return { ...item, amount: newAmount };
+  });
 
-    setInvestments(updatedInvestments);
-    setPortfolio(newPortfolioValue);
-    
-    const change = newPortfolioValue - portfolio;
-    setYearHistory([...yearHistory, { year, value: newPortfolioValue, change }]);
+  // Step 2: Compute total investment value (excluding cash)
+  const investedValue = updatedInvestments.reduce((sum, i) => sum + i.amount, 0);
 
-    if (year >= 5) {
-      setGameComplete(true);
-      const totalReturn = ((newPortfolioValue - totalInvested) / totalInvested) * 100;
-      const points = Math.max(50, Math.min(150, Math.floor(100 + totalReturn)));
-      onComplete(points);
-    } else {
-      setYear(year + 1);
-    }
-  };
+  // Step 3: Update total value but keep cash separate
+  const totalValue = portfolio + investedValue;
+
+  // Step 4: Record progress for the year
+  const lastValue = yearHistory[yearHistory.length - 1].value;
+  const change = totalValue - lastValue;
+  setYearHistory([...yearHistory, { year, value: totalValue, change }]);
+
+  // Step 5: Save new investment states
+  setInvestments(updatedInvestments);
+
+  if (year >= 5) {
+    setGameComplete(true);
+
+    // Calculate total & annualized returns properly
+    const initialValue = yearHistory.length > 0 ? yearHistory[0].value : 1000;
+    const finalValue = totalValue;
+    const totalGrowth = ((finalValue - initialValue) / initialValue) * 100;
+    const yearsPassed = year;
+    const cagr = (Math.pow(finalValue / initialValue, 1 / yearsPassed) - 1) * 100;
+
+    const totalReturn = Math.min(200, Math.max(-100, cagr));
+    const points = Math.max(50, Math.min(150, Math.floor(100 + totalReturn)));
+    onComplete(points);
+  } else {
+    setYear(year + 1);
+  }
+};
+
 
   const makeInvestment = () => {
     if (!selectedInvestment || investAmount <= 0) return;
-    
+
     if (investAmount > portfolio) {
       alert("You don't have enough money!");
       return;
     }
 
-    setInvestments([...investments, { 
-      investment: selectedInvestment, 
-      amount: investAmount,
-      yearBought: year 
-    }]);
+    setInvestments([
+      ...investments,
+      {
+        investment: selectedInvestment,
+        amount: investAmount,
+        yearBought: year,
+      },
+    ]);
     setPortfolio(portfolio - investAmount);
     setTotalInvested(totalInvested + investAmount);
     setSelectedInvestment(null);
@@ -125,33 +147,46 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
   };
 
   const getRiskColor = (risk: string) => {
-    switch(risk) {
-      case 'low': return 'text-green-400';
-      case 'medium': return 'text-yellow-400';
-      case 'high': return 'text-red-400';
-      default: return 'text-white';
+    switch (risk) {
+      case 'low':
+        return 'text-green-400';
+      case 'medium':
+        return 'text-yellow-400';
+      case 'high':
+        return 'text-red-400';
+      default:
+        return 'text-white';
     }
   };
 
-  const totalPortfolioValue = portfolio + investments.reduce((sum: any, item: { amount: any; }) => sum + item.amount, 0);
-  const totalReturn = ((totalPortfolioValue - 1000) / 1000) * 100;
+  const totalPortfolioValue =
+    portfolio + investments.reduce((sum, item) => sum + item.amount, 0);
+
+  // ✅ Proper CAGR return calculation (realistic annualized)
+  let totalReturn = 0;
+  if (year > 1) {
+    const initialValue = 1000;
+    const yearsPassed = year - 1;
+    totalReturn = (Math.pow(totalPortfolioValue / initialValue, 1 / yearsPassed) - 1) * 100;
+    if (totalReturn < -100) totalReturn = -100;
+    if (totalReturn > 200) totalReturn = 200;
+  }
+
+  const initialValue = yearHistory.length > 0 ? yearHistory[0].value : 1000;
+  const finalValue = yearHistory.length > 0 ? yearHistory[yearHistory.length - 1].value : totalPortfolioValue;
+  const totalGrowth = ((finalValue - initialValue) / initialValue) * 100;
 
   return (
     <div className="max-w-6xl mx-auto relative">
-      {/* Inline back button (removed floating) */}
       <GameBackButton onBack={onBack} />
-    <Card className="shadow-2xl custom-rounded no-border custom-card">
-      <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
-        <CardTitle className="text-3xl font-bold">
-            {/* <div className="p-2 bg-white/20 rounded-lg">
-              <TrendingUp className="w-7 h-7" />
-            </div> */}
-            Investment Challenge
-          </CardTitle>
+      <Card className="shadow-2xl custom-rounded no-border custom-card">
+        <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden flex flex-col items-center text-center header-spaced text-primary">
+          <CardTitle className="text-3xl font-bold">Investment Challenge</CardTitle>
           <CardDescription className="text-blue-100 text-base text-primary">
             Grow your $1,000 portfolio over 5 years. Diversify your investments wisely!
           </CardDescription>
         </CardHeader>
+
         <CardContent className="p-8 space-y-6">
           {!gameComplete ? (
             <>
@@ -162,17 +197,31 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                   <p className="text-3xl text-white tracking-tight text-primary">{year} / 5</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
-                  <p className="text-sm text-green-200 uppercase tracking-wider text-primary">Available Cash</p>
-                  <p className="text-3xl text-white tracking-tight text-primary ">${portfolio.toFixed(0)}</p>
+                  <p className="text-sm text-green-200 uppercase tracking-wider text-primary">
+                    Available Cash
+                  </p>
+                  <p className="text-3xl text-white tracking-tight text-primary">
+                    ${portfolio.toFixed(0)}
+                  </p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-2xl border-2 border-purple-400/30">
-                  <p className="text-sm text-purple-200 uppercase tracking-wider text-primary">Total Value</p>
-                  <p className="text-3xl text-white tracking-tight text-primary ">${totalPortfolioValue.toFixed(0)}</p>
+                  <p className="text-sm text-purple-200 uppercase tracking-wider text-primary">
+                    Total Value
+                  </p>
+                  <p className="text-3xl text-white tracking-tight text-primary">
+                    ${totalPortfolioValue.toFixed(0)}
+                  </p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
-                  <p className="text-sm text-yellow-200 uppercase tracking-wider text-primary">Return</p>
-                  <p className={`text-3xl tracking-tight ${totalReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    {totalReturn >= 0 ? '+' : ''}{totalReturn.toFixed(1)}%
+                  <p className="text-sm text-yellow-200 uppercase tracking-wider text-primary">
+                    Return (CAGR)
+                  </p>
+                  <p
+                    className={`text-3xl tracking-tight ${
+                      totalReturn >= 0 ? 'text-green-400' : 'text-red-400'
+                    }`}
+                  >
+                    {year === 1 ? '—' : `${totalReturn >= 0 ? '+' : ''}${totalReturn.toFixed(1)}%`}
                   </p>
                 </div>
               </div>
@@ -180,20 +229,25 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
               {/* Current Investments */}
               {investments.length > 0 && (
                 <div className="p-6 bg-slate-800/50 rounded-2xl border-2 border-white/10">
-                  <h3 className="text-xl text-white mb-4 tracking-tight flex items-center gap-2 text-primary">
+                  <h3 className="text-xl text-white mb-4 tracking-tight text-primary">
                     Your Portfolio
                   </h3>
                   <div className="space-y-3">
                     {investments.map((item, index) => {
                       const percentage = (item.amount / totalPortfolioValue) * 100;
                       return (
-                        <div key={index} className="flex items-center justify-between p-4 bg-slate-700/50 rounded-xl">
+                        <div
+                          key={index}
+                          className="flex items-center justify-between p-4 bg-slate-700/50 rounded-xl"
+                        >
                           <div className="flex items-center gap-3">
                             <span className="text-3xl">{item.investment.emoji}</span>
                             <div>
                               <p className="text-white">{item.investment.name}</p>
                               <p className="text-sm text-blue-300">
-                                <span className={getRiskColor(item.investment.risk)}>{item.investment.risk} risk</span>
+                                <span className={getRiskColor(item.investment.risk)}>
+                                  {item.investment.risk} risk
+                                </span>
                               </p>
                             </div>
                           </div>
@@ -227,7 +281,9 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                       <p className="text-sm text-blue-300 mb-2">{investment.description}</p>
                       <div className="flex items-center justify-between text-sm">
                         <span className={getRiskColor(investment.risk)}>{investment.risk} risk</span>
-                        <span className="text-green-400">{investment.minReturn}% to {investment.maxReturn}%</span>
+                        <span className="text-green-400">
+                          {investment.minReturn}% to {investment.maxReturn}%
+                        </span>
                       </div>
                     </button>
                   ))}
@@ -235,43 +291,41 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
 
                 {selectedInvestment && (
                   <div className="p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                    <h4 className="text-white mb-4 text-primary">Invest in {selectedInvestment.name}</h4>
+                    <h4 className="text-white mb-4 text-primary">
+                      Invest in {selectedInvestment.name}
+                    </h4>
                     <div className="flex gap-4 items-end">
                       <div className="flex-1">
-                        <label className="text-sm text-blue-200 mb-2 block text-primary">Amount to invest</label>
+                        <label className="text-sm text-blue-200 mb-2 block text-primary">
+                          Amount to invest
+                        </label>
                         <input
                           type="number"
                           value={investAmount || ''}
-                          onChange={(e) => setInvestAmount(Math.min(portfolio, Math.max(0, parseInt(e.target.value) || 0)))}
+                          onChange={(e) =>
+                            setInvestAmount(
+                              Math.min(portfolio, Math.max(0, parseInt(e.target.value) || 0))
+                            )
+                          }
                           placeholder="Enter amount"
                           className="w-full px-4 py-3 rounded-xl bg-slate-800 border-2 border-white/10 text-white"
                           max={portfolio}
                         />
                         <div className="flex gap-2 mt-2">
-                          <button
-                            onClick={() => setInvestAmount(Math.floor(portfolio * 0.25))}
-                            className="px-3 py-1 rounded-lg bg-slate-700 text-white text-sm hover:bg-slate-600"
-                          >
-                            25%
-                          </button>
-                          <button
-                            onClick={() => setInvestAmount(Math.floor(portfolio * 0.5))}
-                            className="px-3 py-1 rounded-lg bg-slate-700 text-white text-sm hover:bg-slate-600"
-                          >
-                            50%
-                          </button>
-                          <button
-                            onClick={() => setInvestAmount(Math.floor(portfolio * 0.75))}
-                            className="px-3 py-1 rounded-lg bg-slate-700 text-white text-sm hover:bg-slate-600"
-                          >
-                            75%
-                          </button>
-                          <button
-                            onClick={() => setInvestAmount(portfolio)}
-                            className="px-3 py-1 rounded-lg bg-slate-700 text-white text-sm hover:bg-slate-600"
-                          >
-                            All
-                          </button>
+                          {[
+                            { label: '25%', val: 0.25 },
+                            { label: '50%', val: 0.5 },
+                            { label: '75%', val: 0.75 },
+                            { label: 'All', val: 1 },
+                          ].map((b) => (
+                            <button
+                              key={b.label}
+                              onClick={() => setInvestAmount(Math.floor(portfolio * b.val))}
+                              className="px-3 py-1 rounded-lg bg-slate-700 text-white text-sm hover:bg-slate-600"
+                            >
+                              {b.label}
+                            </button>
+                          ))}
                         </div>
                       </div>
                       <Button
@@ -286,7 +340,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 )}
               </div>
 
-              {/* Next Year Button */}
+              {/* Next Year */}
               <div className="flex flex-col gap-4">
                 <Button
                   onClick={nextYear}
@@ -295,12 +349,6 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 >
                   Advance to Year {year + 1} →
                 </Button>
-                
-                <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
-                  <p className="text-primary text-center ">
-                  Pro Tip: Diversification (spreading investments across different types) helps reduce risk. Don't put all your money in one place!
-                  </p>
-                </div>
               </div>
             </>
           ) : (
@@ -309,8 +357,13 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 {totalReturn >= 20 ? '🚀' : totalReturn >= 0 ? '📈' : '📉'}
               </div>
               <h3 className="text-4xl text-white tracking-tight">
-                {totalReturn >= 20 ? 'Outstanding Returns!' : totalReturn >= 0 ? 'Positive Growth!' : 'Learning Experience!'}
+                {totalReturn >= 20
+                  ? 'Outstanding Returns!'
+                  : totalReturn >= 0
+                  ? 'Positive Growth!'
+                  : 'Learning Experience!'}
               </h3>
+
               <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 <div className="p-4 bg-slate-800/50 rounded-xl">
                   <p className="text-sm text-blue-300">Started With</p>
@@ -318,14 +371,34 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 </div>
                 <div className="p-4 bg-slate-800/50 rounded-xl">
                   <p className="text-sm text-blue-300">Ended With</p>
-                  <p className="text-2xl text-white">${totalPortfolioValue.toFixed(0)}</p>
-                </div>
-                <div className="p-4 bg-slate-800/50 rounded-xl">
-                  <p className="text-sm text-blue-300">Total Return</p>
-                  <p className={`text-2xl ${totalReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                    {totalReturn >= 0 ? '+' : ''}{totalReturn.toFixed(1)}%
+                  <p className="text-2xl text-white">
+                    ${totalPortfolioValue.toFixed(0)}
                   </p>
                 </div>
+                <div className="p-4 bg-slate-800/50 rounded-xl">
+                  <p className="text-sm text-blue-300">Total Growth</p>
+                  <p
+                    className={`text-2xl ${
+                      totalGrowth >= 0 ? 'text-green-400' : 'text-red-400'
+                    }`}
+                  >
+                    {totalGrowth >= 0 ? '+' : ''}
+                    {totalGrowth.toFixed(1)}%
+                  </p>
+                </div>
+              </div>
+
+              {/* CAGR Display */}
+              <div className="p-4 bg-slate-700/50 rounded-xl max-w-md mx-auto">
+                <p className="text-sm text-blue-300">Average Annual Return (CAGR)</p>
+                <p
+                  className={`text-2xl ${
+                    totalReturn >= 0 ? 'text-green-400' : 'text-red-400'
+                  }`}
+                >
+                  {totalReturn >= 0 ? '+' : ''}
+                  {totalReturn.toFixed(1)}%
+                </p>
               </div>
 
               {/* Performance History */}
@@ -333,27 +406,31 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 <h4 className="text-white mb-4">Your Journey</h4>
                 <div className="space-y-2">
                   {yearHistory.map((record, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg"
+                    >
                       <span className="text-blue-300">Year {record.year}</span>
                       <span className="text-white">${record.value.toFixed(0)}</span>
                       {record.change !== 0 && (
-                        <span className={`flex items-center gap-1 ${record.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                          {record.change >= 0 ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
-                          {record.change >= 0 ? '+' : ''}{record.change.toFixed(0)}
+                        <span
+                          className={`flex items-center gap-1 ${
+                            record.change >= 0 ? 'text-green-400' : 'text-red-400'
+                          }`}
+                        >
+                          {record.change >= 0 ? (
+                            <ArrowUp className="w-4 h-4" />
+                          ) : (
+                            <ArrowDown className="w-4 h-4" />
+                          )}
+                          {record.change >= 0 ? '+' : ''}
+                          {record.change.toFixed(0)}
                         </span>
                       )}
                     </div>
                   ))}
                 </div>
               </div>
-
-              <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30 max-w-2xl mx-auto">
-                <p className="text-yellow-100 text-lg">
-                  💡 Key Takeaway: Investing involves risk, but over time, a diversified portfolio typically grows. 
-                  The earlier you start investing, the more time your money has to grow through compound returns!
-                </p>
-              </div>
-              
             </div>
           )}
         </CardContent>
