@@ -205,7 +205,7 @@ body, p, span, label, button, input, textarea {
     --color-rose-900: oklch(.41 .159 10.272);
     --color-slate-600: oklch(.446 .043 257.281);
     --color-slate-700: oklch(.372 .044 257.287);
-    --color-slate-800: oklch(.279 .041 260.031);
+    --color-slate-800: oklch(89.363% 0.00766 260.876);
     --color-slate-900: oklch(.208 .042 265.755);
     --color-gray-300: oklch(.872 .01 258.338);
     --color-gray-500: oklch(.551 .027 264.364);
@@ -1409,7 +1409,7 @@ body, p, span, label, button, input, textarea {
   }
 
   .from-\[\#DA2032\] {
-    --tw-gradient-from: #da2032;
+    --tw-gradient-from: #eaeaea;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
 

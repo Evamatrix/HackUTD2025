@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ArrowLeft, Home } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Home, Briefcase } from 'lucide-react';
 import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -13,134 +13,114 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
   const [stage, setStage] = useState<'intro' | 'choosing' | 'result'>('intro');
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
+  // 🎭 Random Luna profiles
+  const lunaProfiles = [
+    { job: 'Barista ☕', income: 2400, expenses: 1500, lifestyle: 'lives in a small apartment, loves coffee and saving for travel.' },
+    { job: 'Teacher 🍎', income: 3200, expenses: 1700, lifestyle: 'cares for her students, balances budget carefully each month.' },
+    { job: 'Engineer 💻', income: 4500, expenses: 2000, lifestyle: 'enjoys gadgets and eats out often, but saves responsibly.' },
+    { job: 'Artist 🎨', income: 2800, expenses: 1800, lifestyle: 'freelances and has an unpredictable income.' },
+    { job: 'Nurse 🏥', income: 3800, expenses: 1900, lifestyle: 'works long hours but values financial stability.' },
+    { job: 'Game Designer 🎮', income: 4000, expenses: 2100, lifestyle: 'loves gaming, creative projects, and smart budgeting.' },
+  ];
+
+  const [luna, setLuna] = useState(lunaProfiles[0]);
+
+  useEffect(() => {
+    // Pick a random profile each game
+    const randomProfile = lunaProfiles[Math.floor(Math.random() * lunaProfiles.length)];
+    setLuna(randomProfile);
+  }, []);
+
+  // 🏠 Mortgage options
   const mortgageOptions = [
     {
       id: 1,
-      title: 'The Cozy Cat House 🏠',
-      price: 200000,
+      title: 'Cozy 30-Year Home 🏠',
       downPayment: 40000,
       monthlyPayment: 950,
       years: 30,
       totalPaid: 342000,
-      description: '20% down, standard 30-year loan',
-      emoji: '😸',
-      pros: ['Lower monthly payment', 'More affordable each month'],
-      cons: ['Pay more interest over time', 'Takes longer to own'],
+      description: '20% down, 30-year loan',
+      emoji: '🐱',
     },
     {
       id: 2,
-      title: 'The Quick Cat Den 🏡',
-      price: 200000,
+      title: 'Speedy 15-Year Home 🚀',
       downPayment: 40000,
       monthlyPayment: 1600,
       years: 15,
       totalPaid: 288000,
-      description: '20% down, faster 15-year loan',
+      description: '20% down, faster payoff',
       emoji: '😺',
-      pros: ['Pay off faster', 'Save $54,000 in interest!', 'Own your home sooner'],
-      cons: ['Higher monthly payment', 'Less money for other things each month'],
     },
     {
       id: 3,
-      title: 'The Small Down Cat Cottage 🏘️',
-      price: 200000,
+      title: 'Low Down Payment Plan 🏘️',
       downPayment: 10000,
       monthlyPayment: 1100,
       years: 30,
       totalPaid: 396000,
-      description: '5% down, 30-year loan + PMI',
+      description: '5% down, higher insurance costs',
       emoji: '😿',
-      pros: ['Need less money upfront', 'Can buy sooner'],
-      cons: ['Higher monthly payment', 'Pay extra insurance (PMI)', 'Pay $196,000 in interest total!'],
     },
   ];
 
-  const handleStartQuiz = () => {
-    setStage('choosing');
-  };
-
-  const handleSelectOption = (id: number) => {
-    setSelectedOption(id);
-  };
-
-  const handleConfirmChoice = () => {
-    setStage('result');
-    // Award points based on understanding (option 2 is best financially)
-    const points = selectedOption === 2 ? 100 : selectedOption === 1 ? 75 : 50;
-    onComplete(points);
-  };
+  const handleSelectOption = (id: number) => setSelectedOption(id);
+  const handleConfirmChoice = () => setStage('result');
 
   const selectedMortgage = mortgageOptions.find(opt => opt.id === selectedOption);
+  const calcLeftover = (payment: number) => luna.income - (luna.expenses + payment);
+
+  const getOutcome = (leftover: number) => {
+    if (leftover > 800)
+      return `Luna the ${luna.job.split(' ')[0]} can easily afford this home! She covers her expenses, saves comfortably, and still has money for treats 🐾.`;
+    if (leftover > 200)
+      return `Luna can afford this home but must budget carefully each month. She might skip fancy lattes for a while ☕.`;
+    if (leftover >= 0)
+      return `Luna breaks even — she can pay her bills, but there’s no room for surprises. A vet visit or car repair might cause stress 😿.`;
+    return `Oh no! Luna’s payments are too high for her ${luna.job.toLowerCase()} income. She risks missing payments and should choose a cheaper plan 😰.`;
+  };
+
+  const getPoints = (leftover: number) => {
+    if (leftover > 800) return 100;
+    if (leftover > 200) return 85;
+    if (leftover >= 0) return 70;
+    return 50;
+  };
 
   return (
     <div className="max-w-5xl mx-auto relative">
-      {/* Inline back button (not floating) placed within page flow for consistency */}
       <GameBackButton onBack={onBack} />
 
-      <Card className="border-4 border-blue-300 bg-gradient-to-br from-white to-blue-50 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-b-4 border-blue-700">
-          <CardTitle className="flex items-center gap-3 text-2xl">
+      <Card className="shadow-2xl custom-rounded no-border custom-card">
+        <CardHeader className="border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+          <CardTitle className="text-3xl font-bold flex items-center gap-3">
             <div className="p-2 bg-white/30 rounded-xl">
               <Home className="w-7 h-7" />
             </div>
-            Cat's First Home 🏡
+            Luna’s Mortgage Challenge
           </CardTitle>
-          <CardDescription className="text-blue-100 text-base">
-            Learn about mortgages and how cats buy their dream homes! 🐱
+          <CardDescription className="text-blue-100 text-base text-primary">
+            Help Luna the Cat choose a mortgage she can truly afford!
           </CardDescription>
         </CardHeader>
+
         <CardContent className="p-8 space-y-6">
           {stage === 'intro' && (
-            <div className="space-y-6">
-              <div className="text-center text-7xl mb-4">🏠</div>
-              
-              <div className="space-y-4 text-gray-800">
-                <h3 className="text-2xl text-center text-gray-900">What is a Mortgage?</h3>
-                
-                <div className="bg-teal-50 border-2 border-teal-300 rounded-xl p-6">
-                  <p className="text-lg">
-                    🏡 A <strong>mortgage</strong> is a special loan to buy a house. Most cats can't pay for a whole house at once, so they borrow money from a bank!
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white border-2 border-emerald-300 rounded-xl p-5">
-                    <div className="text-3xl mb-2">💰</div>
-                    <h4 className="text-lg text-gray-900 mb-2">Down Payment</h4>
-                    <p className="text-sm text-gray-700">Money you pay upfront. Usually 5-20% of the home's price.</p>
-                  </div>
-
-                  <div className="bg-white border-2 border-amber-300 rounded-xl p-5">
-                    <div className="text-3xl mb-2">📅</div>
-                    <h4 className="text-lg text-gray-900 mb-2">Monthly Payment</h4>
-                    <p className="text-sm text-gray-700">You pay the bank every month for 15-30 years until the loan is paid off.</p>
-                  </div>
-
-                  <div className="bg-white border-2 border-rose-300 rounded-xl p-5">
-                    <div className="text-3xl mb-2">📈</div>
-                    <h4 className="text-lg text-gray-900 mb-2">Interest</h4>
-                    <p className="text-sm text-gray-700">Extra money you pay to borrow. The longer you take to pay, the more interest you pay!</p>
-                  </div>
-
-                  <div className="bg-white border-2 border-purple-300 rounded-xl p-5">
-                    <div className="text-3xl mb-2">🏆</div>
-                    <h4 className="text-lg text-gray-900 mb-2">Own Your Home</h4>
-                    <p className="text-sm text-gray-700">When you finish paying, the house is all yours!</p>
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 border-2 border-amber-400 rounded-xl p-5">
-                  <p className="text-amber-900">
-                    <strong>🌱 Fun Fact:</strong> Paying off a mortgage faster (like 15 years instead of 30) can save you tens of thousands of dollars in interest!
-                  </p>
-                </div>
-              </div>
-
-              <Button 
-                onClick={handleStartQuiz} 
+            <div className="space-y-6 text-center">
+              <div className="text-8xl mb-4">🐾</div>
+              <h3 className="text-2xl text-gray-900 font-semibold">Meet Luna the {luna.job}!</h3>
+              <p className="text-gray-700 max-w-2xl mx-auto">
+                Luna earns <strong>${luna.income.toLocaleString()}</strong> per month and spends around <strong>${luna.expenses.toLocaleString()}</strong> on living costs.
+              </p>
+              <p className="text-gray-700 max-w-2xl mx-auto">
+                She {luna.lifestyle} Now she’s found her dream $200,000 home and needs your help picking the right mortgage plan!
+              </p>
+              <Button
+                onClick={() => setStage('choosing')}
                 className="w-full bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-lg py-6 text-white shadow-xl"
               >
-                Help the Cat Choose a Home! 🐱
+                Help Luna Choose a Plan 💵
               </Button>
             </div>
           )}
@@ -148,77 +128,74 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
           {stage === 'choosing' && (
             <div className="space-y-6">
               <div className="text-center">
-                <div className="text-6xl mb-4">🤔</div>
-                <h3 className="text-2xl text-gray-900 mb-2">Choose the Best Option!</h3>
-                <p className="text-gray-600">The cat wants to buy a $200,000 house. Which mortgage should they choose?</p>
+                <div className="text-6xl mb-4">🏦</div>
+                <h3 className="text-2xl text-gray-900 mb-2 font-semibold">Can Luna Afford This?</h3>
+                <p className="text-gray-600">
+                  Luna earns ${luna.income}/month and spends ${luna.expenses} on her daily life.
+                </p>
               </div>
 
               <div className="grid grid-cols-1 gap-4">
-                {mortgageOptions.map((option) => (
-                  <div
-                    key={option.id}
-                    onClick={() => handleSelectOption(option.id)}
-                    className={`cursor-pointer p-6 rounded-2xl border-3 transition-all transform ${
-                      selectedOption === option.id
-                        ? 'border-blue-500 bg-blue-50 scale-105 shadow-xl'
-                        : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50 hover:scale-102'
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="text-5xl">{option.emoji}</div>
-                      <div className="flex-1">
-                        <h4 className="text-xl text-gray-900 mb-1">{option.title}</h4>
-                        <p className="text-sm text-gray-600 mb-3">{option.description}</p>
-                        
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                          <div className="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-lg">
-                            <p className="text-xs text-purple-700">Down Payment</p>
-                            <p className="text-purple-900">${(option.downPayment / 1000).toFixed(0)}k</p>
-                          </div>
-                          <div className="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-lg">
-                            <p className="text-xs text-teal-700">Per Month</p>
-                            <p className="text-teal-900">${option.monthlyPayment}</p>
-                          </div>
-                          <div className="bg-gradient-to-br from-amber-100 to-amber-200 p-3 rounded-lg">
-                            <p className="text-xs text-amber-700">Loan Length</p>
-                            <p className="text-amber-900">{option.years} years</p>
-                          </div>
-                          <div className="bg-gradient-to-br from-rose-100 to-rose-200 p-3 rounded-lg">
-                            <p className="text-xs text-rose-700">Total Paid</p>
-                            <p className="text-rose-900">${(option.totalPaid / 1000).toFixed(0)}k</p>
-                          </div>
-                        </div>
+                {mortgageOptions.map(option => {
+                  const leftover = calcLeftover(option.monthlyPayment);
+                  const canAfford = leftover >= 0;
+                  return (
+                    <div
+                      key={option.id}
+                      onClick={() => handleSelectOption(option.id)}
+                      className={`cursor-pointer p-6 rounded-2xl border-2 transition-all transform ${
+                        selectedOption === option.id
+                          ? 'border-blue-500 bg-blue-50 scale-105 shadow-xl'
+                          : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50 hover:scale-[1.02]'
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="text-5xl">{option.emoji}</div>
+                        <div className="flex-1 text-left">
+                          <h4 className="text-xl text-gray-900 font-semibold mb-1">{option.title}</h4>
+                          <p className="text-sm text-gray-600 mb-3">{option.description}</p>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div>
-                            <p className="text-xs text-green-700 mb-1">✅ Pros:</p>
-                            <ul className="text-xs text-gray-700 space-y-1">
-                              {option.pros.map((pro, i) => (
-                                <li key={i}>• {pro}</li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <p className="text-xs text-red-700 mb-1">⚠️ Cons:</p>
-                            <ul className="text-xs text-gray-700 space-y-1">
-                              {option.cons.map((con, i) => (
-                                <li key={i}>• {con}</li>
-                              ))}
-                            </ul>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                            <div className="bg-purple-100 p-3 rounded-lg">
+                              <p className="text-xs text-purple-700">Down Payment</p>
+                              <p className="text-purple-900">${(option.downPayment / 1000).toFixed(0)}k</p>
+                            </div>
+                            <div className="bg-teal-100 p-3 rounded-lg">
+                              <p className="text-xs text-teal-700">Monthly Payment</p>
+                              <p className="text-teal-900">${option.monthlyPayment}</p>
+                            </div>
+                            <div className="bg-amber-100 p-3 rounded-lg">
+                              <p className="text-xs text-amber-700">Years</p>
+                              <p className="text-amber-900">{option.years}</p>
+                            </div>
+                            <div className="bg-rose-100 p-3 rounded-lg">
+                              <p className="text-xs text-rose-700">Leftover / Month</p>
+                              <p
+                                className={`text-lg font-semibold ${
+                                  leftover > 500
+                                    ? 'text-green-700'
+                                    : leftover > 0
+                                    ? 'text-yellow-700'
+                                    : 'text-red-700'
+                                }`}
+                              >
+                                {canAfford ? `$${leftover}` : `-$${Math.abs(leftover)}`}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {selectedOption && (
-                <Button 
-                  onClick={handleConfirmChoice} 
+                <Button
+                  onClick={handleConfirmChoice}
                   className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-lg py-6 text-white shadow-xl"
                 >
-                  Confirm Choice! 🏠
+                  Confirm Luna’s Choice 🏠
                 </Button>
               )}
             </div>
@@ -226,29 +203,37 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
 
           {stage === 'result' && selectedMortgage && (
             <div className="text-center space-y-6 py-8">
-              <div className="text-8xl mb-4">{selectedMortgage.emoji}</div>
-              <h3 className="text-4xl text-gray-900 tracking-tight">
-                Great Learning! 🎓
-              </h3>
+              <div className="text-8xl mb-4">🎉</div>
+              <h3 className="text-4xl text-gray-900 font-bold">Luna’s Outcome</h3>
+
               <p className="text-xl text-gray-700">
-                You chose: <strong>{selectedMortgage.title}</strong>
+                Luna the {luna.job} chose <strong>{selectedMortgage.title}</strong>
               </p>
 
-              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-3 border-blue-300 rounded-2xl p-6 max-w-2xl mx-auto">
-                <h4 className="text-lg text-blue-900 mb-3">💡 What We Learned:</h4>
-                <div className="space-y-3 text-left text-gray-800">
-                  <p>• <strong>15-year mortgage:</strong> Best value! Save $54,000 in interest compared to 30-year.</p>
-                  <p>• <strong>30-year mortgage:</strong> Lower monthly payment, but costs more overall.</p>
-                  <p>• <strong>Low down payment:</strong> Need less money upfront, but pay more in the long run.</p>
-                  <p>• <strong>The key:</strong> Balance what you can afford monthly with total cost!</p>
-                </div>
-              </div>
-
-              <div className="p-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border-2 border-emerald-300 max-w-2xl mx-auto">
-                <p className="text-emerald-900 text-lg">
-                  🌳 Remember: Buying a home is a big decision! Take time to save for a good down payment and choose a loan you can afford.
+              <div className="bg-blue-50 border border-blue-300 rounded-2xl p-6 max-w-2xl mx-auto">
+                <p className="text-blue-900 text-lg">
+                  {getOutcome(calcLeftover(selectedMortgage.monthlyPayment))}
                 </p>
               </div>
+
+              <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-6 max-w-2xl mx-auto">
+                <h4 className="text-emerald-900 text-lg font-semibold mb-2">💡 What We Learned:</h4>
+                <ul className="text-left text-gray-800 space-y-1">
+                  <li>• Always check how much you have left after expenses.</li>
+                  <li>• Your income determines how much home you can afford.</li>
+                  <li>• A smaller payment can mean less stress and more savings long-term.</li>
+                </ul>
+              </div>
+
+              <Button
+                onClick={() => {
+                    onComplete(getPoints(calcLeftover(selectedMortgage.monthlyPayment)));
+                    onBack(); // 👈 Go back to dashboard/home
+                }}
+                className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white text-lg py-4 px-8 shadow-xl"
+              >
+                Finish Lesson 🏡
+              </Button>
             </div>
           )}
         </CardContent>

@@ -63,15 +63,15 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
     <div className="max-w-4xl mx-auto relative">
       {/* Inline back button (removed floating) */}
       <GameBackButton onBack={onBack} />
-      <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-[#DA2032] to-[#B01828] text-white border-b-4 border-white/20">
-          <CardTitle className="flex items-center gap-3 text-2xl">
+      <Card className="shadow-2xl custom-rounded no-border custom-card">
+        <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+          <CardTitle className="text-3xl font-bold flex items-center gap-3">
             <div className="p-2 bg-white/20 rounded-lg">
               <Scale className="w-7 h-7" />
             </div>
             Want vs Need
           </CardTitle>
-          <CardDescription className="text-red-100 text-base">
+          <CardDescription className="text-red-100 text-base text-primary ">
             Learn the difference between wants and needs!
           </CardDescription>
         </CardHeader>
@@ -79,7 +79,7 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
           {!gameComplete ? (
             <>
               <div className="flex items-center justify-between bg-slate-800/50 p-4 rounded-xl">
-                <p className="text-sm text-blue-200 uppercase tracking-wider">
+                <p className="text-sm text-blue-200 uppercase tracking-wider text-primary ">
                   Question {currentIndex + 1} of {items.length}
                 </p>
                 <p className="text-sm text-green-300 uppercase tracking-wider">
@@ -89,24 +89,24 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
 
               <div className="text-center space-y-8 py-8">
                 <div className="text-8xl mb-4">{currentItem.emoji}</div>
-                <h3 className="text-4xl text-white tracking-tight">{currentItem.name}</h3>
+                <h3 className="text-4xl text-white tracking-tight text-primary ">{currentItem.name}</h3>
                 <p className="text-2xl text-blue-200">Is this a want or a need?</p>
 
                 {!showFeedback ? (
                   <div className="flex gap-6 justify-center mt-8">
                     <button
                       onClick={() => handleChoice('want')}
-                      className="group px-12 py-8 rounded-3xl bg-gradient-to-br from-[#DA2032] to-[#B01828] text-white hover:from-[#B01828] hover:to-[#901420] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
+                       className="group px-12 py-8 rounded-3xl  bg-slate-800 hover:to-[#002D44] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
                     >
                       <p className="text-4xl mb-3">🎁</p>
-                      <p className="text-2xl tracking-tight">Want</p>
+                      <p className="text-2xl tracking-tight text-primary ">Want</p>
                     </button>
                     <button
                       onClick={() => handleChoice('need')}
-                      className="group px-12 py-8 rounded-3xl bg-gradient-to-br from-[#004977] to-[#003D5C] text-white hover:from-[#003D5C] hover:to-[#002D44] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
+                      className="group px-12 py-8 rounded-3xl border-white/10 bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105 transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
                     >
                       <p className="text-4xl mb-3">✅</p>
-                      <p className="text-2xl tracking-tight">Need</p>
+                      <p className="text-2xl tracking-tight text-primary ">Need</p>
                     </button>
                   </div>
                 ) : (
@@ -122,7 +122,7 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
               </div>
 
               <div className="p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                <p className="text-sm text-blue-200">
+                <p className="text-sm text-blue-200 text-primary ">
                   💡 Remember: Needs are essential for living and health. 
                   Wants are nice to have but not necessary.
                 </p>

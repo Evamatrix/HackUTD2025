@@ -62,15 +62,16 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
     <div className="max-w-4xl mx-auto">
       <GameBackButton onBack={onBack} />
 
-      <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
-          <CardTitle className="flex items-center gap-3 text-2xl">
-            <div className="p-2 bg-white/20 rounded-lg">
+
+    <Card className="shadow-2xl custom-rounded no-border custom-card">
+      <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+        <CardTitle className="text-3xl font-bold">
+            {/* <div className="p-2 bg-white/20 rounded-lg">
               <DollarSign className="w-7 h-7" />
-            </div>
+            </div> */}
             Budget Builder
           </CardTitle>
-          <CardDescription className="text-blue-100 text-base">
+          <CardDescription className="text-blue-100 text-base text-primary">
             You have ${budget} to spend. Choose wisely!
           </CardDescription>
         </CardHeader>
@@ -80,12 +81,12 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                    <p className="text-sm text-blue-200 uppercase tracking-wider">Spent</p>
-                    <p className="text-3xl text-white tracking-tight">${spent}</p>
+                    <p className="text-primary text-sm text-blue-200 uppercase tracking-wider">Spent</p>
+                    <p className="text-primary text-3xl text-white tracking-tight">${spent}</p>
                   </div>
                   <div className="p-4 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
-                    <p className="text-sm text-green-200 uppercase tracking-wider">Remaining</p>
-                    <p className={`text-3xl tracking-tight ${remaining < 10 ? 'text-red-400' : 'text-green-400'}`}>
+                    <p className="text-primary text-sm text-green-200 uppercase tracking-wider">Remaining</p>
+                    <p className={`text-primary text-3xl tracking-tight ${remaining < 10 ? 'text-red-400' : 'text-green-400'}`}>
                       ${remaining}
                     </p>
                   </div>
@@ -94,8 +95,8 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
               </div>
 
               <div>
-                <h3 className="text-xl text-white mb-6 tracking-tight">Available Items (Click to add/remove)</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <h3 className="text-primary text-xl text-white mb-6 tracking-tight">Available Items (Click to add/remove)</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
                   {items.map((item) => {
                     const isSelected = selectedItems.some(i => i.name === item.name);
                     const canAfford = spent + item.cost <= budget;
@@ -113,9 +114,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                             : 'border-white/5 bg-slate-900/50 opacity-40'
                         }`}
                       >
-                        <div className="text-4xl mb-3">{item.emoji}</div>
-                        <p className="text-sm text-white mb-2">{item.name}</p>
-                        <p className="text-blue-300 text-lg">${item.cost}</p>
+                        <div className="text-primary text-4xl mb-3">{item.emoji}</div>
+                        <p className="text-primary text-sm text-white mb-2">{item.name}</p>
+                        <p className="text-primary text-blue-300 text-lg">${item.cost}</p>
                         {isSelected && (
                           <div className="mt-3">
                             <span className="text-xs bg-[#004977] text-white px-3 py-1 rounded-full">
@@ -130,8 +131,8 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
               </div>
 
               {selectedItems.length > 0 && (
-                <div className="p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
-                  <h4 className="text-sm text-green-200 mb-3 uppercase tracking-wider">Your Cart:</h4>
+                <div className="text-primary p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
+                  <h4 className="text-primary text-sm text-green-200 mb-3 uppercase tracking-wider">Your Cart:</h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedItems.map((item, index) => (
                       <span key={index} className="text-sm bg-slate-800 px-4 py-2 rounded-xl border border-green-300/30 text-white">
@@ -144,24 +145,24 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
 
               <Button 
                 onClick={handleFinish} 
-                className="w-full bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] text-lg py-6 shadow-xl"
+                className="text-primary w-full bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] text-lg py-6 shadow-xl"
                 disabled={selectedItems.length === 0}
               >
                 Finish Shopping
               </Button>
             </>
           ) : (
-            <div className="text-center space-y-6 py-8">
+            <div className="text-primary text-center space-y-6 py-8">
               <div className="text-8xl mb-4">
                 {progress >= 70 ? '🎉' : progress >= 40 ? '👍' : '🤔'}
               </div>
-              <h3 className="text-4xl text-white tracking-tight">
+              <h3 className="text-primary text-4xl text-white tracking-tight">
                 {progress >= 70 ? 'Excellent Budgeting!' : progress >= 40 ? 'Not Bad!' : 'Keep Learning!'}
               </h3>
-              <p className="text-xl text-blue-200">
+              <p className="text-primary text-xl text-blue-200">
                 You used ${spent} of your ${budget} budget ({Math.round(progress)}%)
               </p>
-              <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
+              <div className="text-primary p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
                 <p className="text-yellow-100 text-lg">
                   💡 Pro Tip: {progress >= 70 
                     ? 'You maximized your budget efficiently!' 
