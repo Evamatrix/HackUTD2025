@@ -11,53 +11,6 @@ export default function AuthMenu() {
       <div className="w-[150px] h-10 rounded-xl bg-white/20 animate-pulse" />
     );
   }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="flex items-center gap-2">
-        <button
-  onClick={() => loginWithRedirect()}
-  className="px-4 py-2 rounded-xl border border-white/20 text-white flex items-center gap-2 transition-colors duration-200"
-  style={{
-    borderWidth: '2px',
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
-  }}
-  onMouseEnter={(e) =>
-    (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)')
-  }
-  onMouseLeave={(e) =>
-    (e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.15)')
-  }
->
-  <LogIn className="w-4 h-4" />
-  Log in
-</button>
-
-    <button
-    onClick={() =>
-        loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })
-    }
-    className="px-4 py-2 rounded-xl border border-white/20 text-white font-medium flex items-center gap-2 transition-colors duration-200"
-    style={{
-        backgroundColor: 'transparent',
-        borderColor: 'white',
-        borderWidth: '2px',
-    }}
-    onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = 'white';
-        e.currentTarget.style.color = 'black';
-    }}
-    onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = 'transparent';
-        e.currentTarget.style.color = 'white';
-    }}
-    >
-    Sign up
-    </button>
-      </div>
-    );
-  }
-
   // Authenticated UI
   return (
     <div className="flex items-center gap-3">
@@ -74,13 +27,19 @@ export default function AuthMenu() {
         <span className="max-w-[160px] truncate">{user?.name || user?.email}</span>
       </div>
       <button
-        onClick={() =>
-          logout({
-            logoutParams: { returnTo: window.location.origin },
-          })
-        }
-        className="px-3 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-white flex items-center gap-2"
-      >
+  onClick={() => loginWithRedirect()}
+  className="px-4 py-2 rounded-xl border border-white/20 text-white flex items-center gap-2 transition-colors duration-200"
+  style={{
+    borderWidth: '2px',
+    backgroundColor: 'rgba(0, 0, 0, 0.15)',
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.25)')
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.15)')
+  }
+>
         <LogOut className="w-4 h-4" />
         Log out
       </button>
