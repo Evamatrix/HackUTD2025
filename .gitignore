@@ -28,8 +28,3 @@ out/
 # OS files
 .DS_Store
 Thumbs.db
-*.json
-*.json
-package.json
-*.yaml
-*.js
