@@ -4,6 +4,7 @@
   import path from 'path';
 
   export default defineConfig({
+    base: '/HackUTD2025/',
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],

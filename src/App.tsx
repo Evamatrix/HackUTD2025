@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dashboard } from './components/Dashboard';
+import PointsHistory from './components/PointsHistory';
 import { SavingsGame } from './components/SavingsGame';
 import { BudgetChallenge } from './components/BudgetChallenge';
 import { WantVsNeedGame } from './components/WantVsNeedGame';
@@ -10,9 +11,12 @@ import { MortgageGame } from './components/MortgageGame';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'dashboard' | 'savings' | 'budget' | 'wantvsneed' | 'moneymatch' | 'investing' | 'debt' | 'mortgage'>('dashboard');
+  const [historyOpen, setHistoryOpen] = useState(false);
+
   const [userProgress, setUserProgress] = useState({
     totalPoints: 0,
     badges: [] as string[],
+    pointsHistory: [] as { date: string; points: number; reason?: string }[],
     gamesCompleted: {
       savings: 0,
       budget: 0,
@@ -33,6 +37,7 @@ export default function App() {
       setUserProgress({
         totalPoints: parsed.totalPoints || 0,
         badges: parsed.badges || [],
+        pointsHistory: parsed.pointsHistory || [],
         gamesCompleted: {
           savings: parsed.gamesCompleted?.savings || 0,
           budget: parsed.gamesCompleted?.budget || 0,
@@ -54,7 +59,11 @@ export default function App() {
   const addPoints = (points: number) => {
     setUserProgress(prev => ({
       ...prev,
-      totalPoints: prev.totalPoints + points
+      totalPoints: prev.totalPoints + points,
+      pointsHistory: [
+        ...(prev.pointsHistory || []),
+        { date: new Date().toISOString(), points, reason: 'Points earned' }
+      ]
     }));
   };
 
@@ -111,12 +120,16 @@ export default function App() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="bg-gradient-to-br from-amber-400 to-amber-600 px-6 py-3 rounded-2xl shadow-lg border-2 border-amber-300 hover:scale-105 transition-transform">
+              <button
+                onClick={() => setHistoryOpen(true)}
+                aria-label="Show Catnip Points History"
+                className="bg-gradient-to-br from-amber-400 to-amber-600 px-6 py-3 rounded-2xl shadow-lg border-2 border-amber-300 hover:scale-105 transition-transform"
+              >
                 <p className="text-xs text-amber-900 uppercase tracking-wide">Catnip Points</p>
                 <p className="text-2xl text-white flex items-center gap-1">
                   {userProgress.totalPoints} <span className="text-lg">🐟</span>
                 </p>
-              </div>
+              </button>
               <div className="bg-gradient-to-br from-teal-500 to-teal-700 px-6 py-3 rounded-2xl shadow-lg border-2 border-teal-400 hover:scale-105 transition-transform">
                 <p className="text-xs text-teal-100 uppercase tracking-wide">Badges</p>
                 <p className="text-2xl text-white flex items-center gap-1">
@@ -127,6 +140,9 @@ export default function App() {
           </div>
         </div>
       </header>
+
+  {/* Points history dialog */}
+  <PointsHistory open={historyOpen} onOpenChange={setHistoryOpen} history={userProgress.pointsHistory} />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
