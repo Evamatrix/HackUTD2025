@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, type FC } from 'react';
 import { ArrowLeft, DollarSign } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 
-interface BudgetChallengeProps {
+// Import cat icons
+import bankingIcon from '../../cat icons/banking.png';
+import coinsIcon from '../../cat icons/coins.png';
+import groceryIcon from '../../cat icons/grocery.png';
+import investingIcon from '../../cat icons/investing.png';
+import learningIcon from '../../cat icons/learning.png';
+import mainIcon from '../../cat icons/main.png';
+import piggyBankIcon from '../../cat icons/piggybank.png';
+
+export interface BudgetChallengeProps {
   onBack: () => void;
   onComplete: (points: number) => void;
 }
@@ -13,30 +22,31 @@ interface Item {
   name: string;
   category: string;
   cost: number;
-  emoji: string;
+  emoji?: string;
+  icon: string; // Make icon required since we're using it
 }
 
-export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
+export const BudgetChallenge: FC<BudgetChallengeProps> = ({ onBack, onComplete }) => {
   const [budget] = useState(50);
   const [spent, setSpent] = useState(0);
   const [selectedItems, setSelectedItems] = useState<Item[]>([]);
   const [gameComplete, setGameComplete] = useState(false);
 
   const items: Item[] = [
-    { name: 'Movie Ticket', category: 'Entertainment', cost: 12, emoji: '🎬' },
-    { name: 'Lunch', category: 'Food', cost: 8, emoji: '🍕' },
-    { name: 'Book', category: 'Education', cost: 15, emoji: '📚' },
-    { name: 'Video Game', category: 'Entertainment', cost: 25, emoji: '🎮' },
-    { name: 'Snacks', category: 'Food', cost: 5, emoji: '🍿' },
-    { name: 'Art Supplies', category: 'Hobbies', cost: 18, emoji: '🎨' },
-    { name: 'Ice Cream', category: 'Food', cost: 6, emoji: '🍦' },
-    { name: 'Soccer Ball', category: 'Sports', cost: 20, emoji: '⚽' },
+    { name: 'Movie Ticket', category: 'Entertainment', cost: 12, icon: mainIcon },
+    { name: 'Lunch', category: 'Food', cost: 8, icon: groceryIcon },
+    { name: 'Book', category: 'Education', cost: 15, icon: learningIcon },
+    { name: 'Video Game', category: 'Entertainment', cost: 25, icon: mainIcon },
+    { name: 'Snacks', category: 'Food', cost: 5, icon: groceryIcon },
+    { name: 'Savings', category: 'Financial', cost: 18, icon: piggyBankIcon },
+    { name: 'Investment', category: 'Financial', cost: 6, icon: investingIcon },
+    { name: 'Banking', category: 'Financial', cost: 20, icon: bankingIcon },
   ];
 
   const handleItemClick = (item: Item) => {
-    if (selectedItems.some(i => i.name === item.name)) {
+    if (selectedItems.some((i: Item) => i.name === item.name)) {
       // Remove item
-      setSelectedItems(selectedItems.filter(i => i.name !== item.name));
+      setSelectedItems(selectedItems.filter((i: Item) => i.name !== item.name));
       setSpent(spent - item.cost);
     } else {
       // Add item if budget allows
@@ -115,7 +125,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                             : 'border-white/5 bg-slate-900/50 opacity-40'
                         }`}
                       >
-                        <div className="text-4xl mb-3">{item.emoji}</div>
+                        <div className="mb-3">
+                          <img src={item.icon} alt={item.name} className="w-12 h-12 object-contain" />
+                        </div>
                         <p className="text-sm text-white mb-2">{item.name}</p>
                         <p className="text-blue-300 text-lg">${item.cost}</p>
                         {isSelected && (
@@ -135,9 +147,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                 <div className="p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
                   <h4 className="text-sm text-green-200 mb-3 uppercase tracking-wider">Your Cart:</h4>
                   <div className="flex flex-wrap gap-2">
-                    {selectedItems.map((item, index) => (
+                    {selectedItems.map((item: Item, index: number) => (
                       <span key={index} className="text-sm bg-slate-800 px-4 py-2 rounded-xl border border-green-300/30 text-white">
-                        {item.emoji} {item.name} (${item.cost})
+                        <img src={item.icon} alt="" className="w-4 h-4 inline-block mr-1" /> {item.name} (${item.cost})
                       </span>
                     ))}
                   </div>
