@@ -5,13 +5,18 @@ on:
     branches:
       - main
 
-# Give the workflow permission to push repository contents (required for gh-pages publish)
+# Give the workflow permission to push repository contents and configure pages
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,12 +37,14 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Optional: provide a personal access token (create secret GH_PAGES_PAT in repo settings)
-          # If your organization or repo blocks GITHUB_TOKEN from pushing, create a PAT with repo:public_repo
-          # and set it as a secret named GH_PAGES_PAT. The action will use it when present.
-          personal_token: ${{ secrets.GH_PAGES_PAT }}
-          publish_dir: ./dist
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
