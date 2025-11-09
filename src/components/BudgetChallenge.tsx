@@ -3,8 +3,9 @@ import { ArrowLeft, DollarSign } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
+import { GameBackButton } from './ui/GameBackButton';
 
-export interface BudgetChallengeProps {
+interface BudgetChallengeProps {
   onBack: () => void;
   onComplete: (points: number) => void;
 }
@@ -34,9 +35,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
   ];
 
   const handleItemClick = (item: Item) => {
-    if (selectedItems.some((i: Item) => i.name === item.name)) {
+    if (selectedItems.some(i => i.name === item.name)) {
       // Remove item
-      setSelectedItems(selectedItems.filter((i: Item) => i.name !== item.name));
+      setSelectedItems(selectedItems.filter(i => i.name !== item.name));
       setSpent(spent - item.cost);
     } else {
       // Add item if budget allows
@@ -59,10 +60,7 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-white hover:text-white hover:bg-white/10">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Dashboard
-      </Button>
+      <GameBackButton onBack={onBack} />
 
       <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
@@ -170,9 +168,6 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
                     : 'Aim to use most of your budget while staying within limits!'}
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] text-lg px-8 py-6 shadow-xl">
-                Back to Dashboard
-              </Button>
             </div>
           )}
         </CardContent>

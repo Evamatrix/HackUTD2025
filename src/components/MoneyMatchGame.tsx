@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, Sparkles } from 'lucide-react';
+import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 
@@ -85,11 +86,10 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-white hover:text-white hover:bg-white/10">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Dashboard
-      </Button>
+    <div className="max-w-4xl mx-auto relative">
+      {/* Inline back button (removed floating) */}
+      <GameBackButton onBack={onBack} />
+
 
       <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
@@ -205,9 +205,7 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
                   💡 Pro Tip: Knowing real-world prices helps you make smart shopping decisions!
                 </p>
               </div>
-              <Button onClick={onBack} className="bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] text-lg px-8 py-6 shadow-xl">
-                Back to Dashboard
-              </Button>
+              
             </div>
           )}
         </CardContent>

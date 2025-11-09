@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Home } from 'lucide-react';
+import { GameBackButton } from './ui/GameBackButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 
@@ -72,11 +73,9 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
   const selectedMortgage = mortgageOptions.find(opt => opt.id === selectedOption);
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <Button onClick={onBack} variant="ghost" className="mb-4 text-emerald-800 hover:text-emerald-900 hover:bg-emerald-100">
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Garden
-      </Button>
+    <div className="max-w-5xl mx-auto relative">
+      {/* Inline back button (not floating) placed within page flow for consistency */}
+      <GameBackButton onBack={onBack} />
 
       <Card className="border-4 border-blue-300 bg-gradient-to-br from-white to-blue-50 shadow-2xl">
         <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-b-4 border-blue-700">
@@ -250,10 +249,6 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
                   🌳 Remember: Buying a home is a big decision! Take time to save for a good down payment and choose a loan you can afford.
                 </p>
               </div>
-
-              <Button onClick={onBack} className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-lg px-8 py-6 shadow-xl text-white">
-                Back to Garden
-              </Button>
             </div>
           )}
         </CardContent>
