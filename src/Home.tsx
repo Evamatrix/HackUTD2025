@@ -119,13 +119,16 @@ export default function Home() {
                 </h1>
                 <p className="text-sm text-emerald-100 tracking-wide">POWERED BY CAPITAL ONE</p>
               </div>
-              <AuthMenu />
             </div>
             <div className="flex items-center gap-3">
+              <AuthMenu />
               <button
                 onClick={() => setHistoryOpen(true)}
                 aria-label="Show Catnip Points History"
                 className="bg-gradient-to-br from-amber-400 to-amber-600 px-6 py-3 rounded-2xl shadow-lg border-2 border-amber-300 hover:scale-105 transition-transform"
+                style={{
+                  cursor: 'default'
+                }}
               >
                 <p className="text-xs text-amber-900 uppercase tracking-wide">Catnip Points</p>
                 <p className="text-2xl text-white flex items-center gap-1">
