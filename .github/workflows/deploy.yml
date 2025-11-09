@@ -5,7 +5,6 @@ on:
     branches:
       - main
 
-# Give the workflow permission to push repository contents and configure pages
 permissions:
   contents: write
   pages: write
@@ -21,9 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # ensure the GITHUB_TOKEN is available to push from the runner
           persist-credentials: true
-          # fetch full history (some deploy actions expect history)
           fetch-depth: 0
 
       - name: Use Node.js
@@ -43,7 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './dist'
+          path: './build'    # <-- Change this to "./dist" or "./build" as appropriate
 
       - name: Deploy to GitHub Pages
         id: deployment
