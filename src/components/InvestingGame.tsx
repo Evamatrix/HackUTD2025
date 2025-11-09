@@ -353,8 +353,13 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
             </>
           ) : (
             <div className="text-center space-y-6 py-8">
-              <div className="text-8xl mb-4">
-                {totalReturn >= 20 ? '🚀' : totalReturn >= 0 ? '📈' : '📉'}
+              <div className="mb-4 flex justify-center">
+                <img 
+                  src={totalReturn >= 0 ? '/assets/icons/upward-cat.svg' : '/assets/icons/downward-cat.svg'}
+                  alt={totalReturn >= 0 ? 'Success cat' : 'Loss cat'}
+                  className="object-contain"
+                  style={{ width: '350px', height: '350px' }}
+                />
               </div>
               <h3 className="text-4xl text-white tracking-tight">
                 {totalReturn >= 20
@@ -367,11 +372,11 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
               <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 <div className="p-4 bg-slate-800/50 rounded-xl">
                   <p className="text-sm text-blue-300">Started With</p>
-                  <p className="text-2xl text-white">$1,000</p>
+                  <p className="text-2xl text-black">$1,000</p>
                 </div>
                 <div className="p-4 bg-slate-800/50 rounded-xl">
                   <p className="text-sm text-blue-300">Ended With</p>
-                  <p className="text-2xl text-white">
+                  <p className="text-2xl text-black">
                     ${totalPortfolioValue.toFixed(0)}
                   </p>
                 </div>
@@ -390,7 +395,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
 
               {/* CAGR Display */}
               <div className="p-4 bg-slate-700/50 rounded-xl max-w-md mx-auto text-primary">
-                <p className="text-sm text-blue-300">Average Annual Return (CAGR)</p>
+                <p className="text-sm text-blue-00">Average Annual Return (CAGR)</p>
                 <p
                   className={`text-2xl ${
                     totalReturn >= 0 ? 'text-green-400' : 'text-red-400'
@@ -403,14 +408,16 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
 
               {/* Performance History */}
               <div className="p-6 bg-slate-800/50 rounded-2xl border-2 border-white/10 max-w-2xl mx-auto">
-                <h4 className="text-white mb-4">Your Journey</h4>
+                <h4 className="text-black mb-4">Your Journey</h4>
                 <div className="space-y-2">
-                  {yearHistory.map((record, index) => (
+                  {yearHistory
+                    .filter((record, index) => index > 0)
+                    .map((record, index) => (
                     <div
                       key={index}
                       className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg"
                     >
-                      <span className="text-blue-300">Year {record.year}</span>
+                      <span className="text-black-300">Year {record.year}</span>
                       <span className="text-white">${record.value.toFixed(0)}</span>
                       {record.change !== 0 && (
                         <span
