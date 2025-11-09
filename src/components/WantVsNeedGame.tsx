@@ -82,7 +82,7 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
                 <p className="text-sm text-blue-200 uppercase tracking-wider text-primary ">
                   Question {currentIndex + 1} of {items.length}
                 </p>
-                <p className="text-sm text-green-300 uppercase tracking-wider">
+                <p className="text-sm text-black uppercase tracking-wider">
                   Score: {score} points
                 </p>
               </div>
@@ -90,20 +90,20 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
               <div className="text-center space-y-8 py-8">
                 <div className="text-8xl mb-4">{currentItem.emoji}</div>
                 <h3 className="text-4xl text-white tracking-tight text-primary ">{currentItem.name}</h3>
-                <p className="text-2xl text-blue-200">Is this a want or a need?</p>
+                <p className="text-2xl text-blue-300">Is this a want or a need?</p>
 
                 {!showFeedback ? (
                   <div className="flex gap-6 justify-center mt-8">
                     <button
                       onClick={() => handleChoice('want')}
-                       className="group px-12 py-8 rounded-3xl  bg-slate-800 hover:to-[#002D44] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
-                    >
+                       className="group px-12 py-8 rounded-3xl bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105 transition-all transform shadow-2xl border-2 border-black/20"
+                       >
                       <p className="text-4xl mb-3">🎁</p>
                       <p className="text-2xl tracking-tight text-primary ">Want</p>
                     </button>
                     <button
                       onClick={() => handleChoice('need')}
-                      className="group px-12 py-8 rounded-3xl border-white/10 bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105 transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
+                      className="group px-12 py-8 rounded-3xl bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105 transition-all transform shadow-2xl border-2 border-black/20"
                     >
                       <p className="text-4xl mb-3">✅</p>
                       <p className="text-2xl tracking-tight text-primary ">Need</p>
@@ -111,10 +111,10 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
                   </div>
                 ) : (
                   <div className={`p-8 rounded-3xl border-2 ${isCorrect ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-green-400/30' : 'bg-gradient-to-br from-red-500/20 to-rose-500/20 border-red-400/30'}`}>
-                    <p className={`text-3xl mb-3 ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
+                    <p className={`text-3xl mb-3 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
                       {isCorrect ? '🎉 Correct!' : '❌ Not quite!'}
                     </p>
-                    <p className={`text-xl ${isCorrect ? 'text-green-200' : 'text-red-200'}`}>
+                    <p className={`text-xl ${isCorrect ? 'text-green-500' : 'text-red-500'}`}>
                       {currentItem.explanation}
                     </p>
                   </div>
@@ -136,14 +136,15 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
               <h3 className="text-4xl text-white tracking-tight">
                 {score >= 80 ? 'Outstanding!' : score >= 60 ? 'Great Job!' : 'Keep Practicing!'}
               </h3>
-              <p className="text-xl text-blue-200">
+              <p className="text-xl text-blue-500"
+              >
                 Final Score: {score} out of {items.length * 10} points
               </p>
               <p className="text-lg text-blue-300">
                 You got {score / 10} out of {items.length} correct!
               </p>
               <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
-                <p className="text-yellow-100 text-lg">
+                <p className="text-yellow-400 text-lg">
                   💡 Pro Tip: Understanding wants vs needs is key to smart spending!
                 </p>
               </div>
