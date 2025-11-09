@@ -131,7 +131,8 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
           <CardHeader className="relative">
             <CardTitle className="flex items-center gap-3 text-2xl">
               <div className="p-2 bg-white/30 rounded-xl">
-                <span className="text-2xl">🏵️</span>
+                <span className="text-2xl"></span>
+                 <img src="/assets/icons/flower.svg" alt="Flower" className="w-8 h-8 object-contain" />
               </div>
               Garden Badges
             </CardTitle>
