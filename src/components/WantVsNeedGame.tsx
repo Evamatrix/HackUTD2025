@@ -96,14 +96,14 @@ export function WantVsNeedGame({ onBack, onComplete }: WantVsNeedGameProps) {
                   <div className="flex gap-6 justify-center mt-8">
                     <button
                       onClick={() => handleChoice('want')}
-                       className="group px-12 py-8 rounded-3xl bg-gradient-to-br from-[#004977] to-[#003D5C] text-white hover:from-[#003D5C] hover:to-[#002D44] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
+                       className="group px-12 py-8 rounded-3xl  bg-slate-800 hover:to-[#002D44] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
                     >
                       <p className="text-4xl mb-3">🎁</p>
                       <p className="text-2xl tracking-tight text-primary ">Want</p>
                     </button>
                     <button
                       onClick={() => handleChoice('need')}
-                      className="group px-12 py-8 rounded-3xl bg-gradient-to-br from-[#004977] to-[#003D5C] text-white hover:from-[#003D5C] hover:to-[#002D44] transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
+                      className="group px-12 py-8 rounded-3xl border-white/10 bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105 transition-all transform hover:scale-110 shadow-2xl border-2 border-white/20"
                     >
                       <p className="text-4xl mb-3">✅</p>
                       <p className="text-2xl tracking-tight text-primary ">Need</p>

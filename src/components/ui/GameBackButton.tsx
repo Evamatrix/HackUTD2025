@@ -14,9 +14,12 @@ export function GameBackButton({ onBack }: GameBackButtonProps) {
       onClick={onBack}
       onMouseEnter={() => setBackHover(true)}
       onMouseLeave={() => setBackHover(false)}
-      className="mb-4 bg-white border border-gray-700 cursor-pointer transition-all duration-200 flex items-center"
+      className="mb-4 cursor-pointer transition-all duration-200 flex items-center text-primary"
       style={{
-        color: backHover ? "var(--color-red-600)" : "#000",
+        color: backHover ? "var(--color-gray-500)" : "inherit", // or your normal text color
+        background: 'none',
+        border: 'none',
+        padding: 0,
       }}
     >
       <ArrowLeft className="w-4 h-4 mr-2" />
@@ -24,4 +27,5 @@ export function GameBackButton({ onBack }: GameBackButtonProps) {
     </Button>
   );
 }
+
 export default GameBackButton;
