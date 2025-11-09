@@ -227,3 +227,33 @@ html {
 }
 
 
+.text-secondary2 {
+  color: #97dd91;
+}
+
+.btn-bg {
+  background-color: #e3e6eb; /* or your preferred color */
+}
+
+
+.btn-solid-red {
+  background-color: #dcdcdc;
+}
+
+.btn-solid-red:hover {
+  background-color: #c9c9c9;
+}
+
+
+.custom-btn {
+  border-color: #6b7280;
+  background-color: #e8e9eb;
+  transition: all 0.2s ease;
+}
+
+.custom-btn:hover {
+  border-color: #a2e2ae;
+  background: linear-gradient(to bottom right, #b5eab710, #9fedc110);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(3, 128, 47, 0.4);
+}

@@ -115,16 +115,16 @@ export function SavingsGame({ onBack, onComplete }: SavingsGameProps) {
                       (choice.amount < 0 && currentSavings + choice.amount < 0);
 
                     return (
-                      <button
-                        key={index}
-                        onClick={() => handleChoice(choice.amount)}
-                        disabled={isDisabled}
-                        className={`p-6 rounded-2xl border-2 transition-all transform ${
-                          weeklyChoice === choice.amount
-                            ? 'border-[#DA2032] bg-gradient-to-br from-red-500/20 to-rose-500/20 scale-105 shadow-xl'
-                            : 'border-white/10 bg-slate-800/50 hover:border-[#DA2032] hover:bg-gradient-to-br hover:from-red-500/10 hover:to-rose-500/10 hover:scale-105'
-                        } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                      >
+                    <button
+                      key={index}
+                      onClick={() => handleChoice(choice.amount)}
+                      disabled={weeklyChoice !== null}
+                      className={`p-6 rounded-2xl border-2 ${
+                        weeklyChoice === choice.amount
+                          ? 'scale-105 shadow-xl'
+                          : 'custom-btn'
+                      } ${weeklyChoice !== null ? 'opacity-50' : ''}`}
+                    >
                         <div className="text-5xl mb-3 text-primary">{choice.emoji}</div>
                         <p className="mb-2 text-primary">{choice.description}</p>
                         <p className="text-2xl text-primary">

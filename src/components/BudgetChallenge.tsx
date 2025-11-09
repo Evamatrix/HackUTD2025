@@ -133,9 +133,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
               {selectedItems.length > 0 && (
                 <div className="text-primary p-6 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
                   <h4 className="text-primary text-sm text-green-200 mb-3 uppercase tracking-wider">Your Cart:</h4>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 text-primary">
                     {selectedItems.map((item, index) => (
-                      <span key={index} className="text-sm bg-slate-800 px-4 py-2 rounded-xl border border-green-300/30 text-white">
+                      <span key={index} className="text-sm bg-slate-800 px-4 py-2 rounded-xl border border-green-300/30 text-white text-primary">
                         {item.emoji} {item.name} (${item.cost})
                       </span>
                     ))}
@@ -145,7 +145,8 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
 
               <Button 
                 onClick={handleFinish} 
-                className="text-primary w-full bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] text-lg py-6 shadow-xl"
+                className="text-primary w-full btn-bg text-lg py-6 shadow-xl"
+
                 disabled={selectedItems.length === 0}
               >
                 Finish Shopping
@@ -162,8 +163,8 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
               <p className="text-primary text-xl text-blue-200">
                 You used ${spent} of your ${budget} budget ({Math.round(progress)}%)
               </p>
-              <div className="text-primary p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
-                <p className="text-yellow-100 text-lg">
+              <div className="text-primary p-6 bg-gradient-to-br from-green-500/20 to--500/20 rounded-2xl border-2 border-yellow-400/30">
+                <p className="text-black-100 text-lg ">
                   💡 Pro Tip: {progress >= 70 
                     ? 'You maximized your budget efficiently!' 
                     : 'Aim to use most of your budget while staying within limits!'}
