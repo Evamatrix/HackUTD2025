@@ -169,15 +169,15 @@ export function DebtGame({ onBack, onComplete }: DebtGameProps) {
   return (
     <div className="max-w-5xl mx-auto relative">
       <GameBackButton onBack={onBack} />
-      <Card className="border-4 border-rose-300 bg-gradient-to-br from-white to-rose-50 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-rose-500 to-pink-600 text-white border-b-4 border-rose-700">
-          <CardTitle className="flex items-center gap-3 text-2xl">
+      <Card className="shadow-2xl custom-rounded no-border custom-card">
+        <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+          <CardTitle className="text-3xl font-bold flex items-center gap-3">
             <div className="p-2 bg-white/30 rounded-xl">
               <span className="text-3xl">😿</span>
             </div>
             Cat's Debt Challenge 💳
           </CardTitle>
-          <CardDescription className="text-rose-100 text-base">
+          <CardDescription className="text-rose-100 text-base text-primary ">
             Balance income, expenses, and debt to become financially free! 🐱
           </CardDescription>
         </CardHeader>

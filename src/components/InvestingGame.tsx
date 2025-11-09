@@ -140,15 +140,15 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
     <div className="max-w-6xl mx-auto relative">
       {/* Inline back button (removed floating) */}
       <GameBackButton onBack={onBack} />
-      <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
-          <CardTitle className="flex items-center gap-3 text-2xl">
-            <div className="p-2 bg-white/20 rounded-lg">
+    <Card className="shadow-2xl custom-rounded no-border custom-card">
+      <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+        <CardTitle className="text-3xl font-bold">
+            {/* <div className="p-2 bg-white/20 rounded-lg">
               <TrendingUp className="w-7 h-7" />
-            </div>
+            </div> */}
             Investment Challenge
           </CardTitle>
-          <CardDescription className="text-blue-100 text-base">
+          <CardDescription className="text-blue-100 text-base text-primary">
             Grow your $1,000 portfolio over 5 years. Diversify your investments wisely!
           </CardDescription>
         </CardHeader>
@@ -158,19 +158,19 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
               {/* Portfolio Stats */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="p-4 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                  <p className="text-sm text-blue-200 uppercase tracking-wider">Year</p>
-                  <p className="text-3xl text-white tracking-tight">{year} / 5</p>
+                  <p className="text-sm text-blue-200 uppercase tracking-wider text-primary">Year</p>
+                  <p className="text-3xl text-white tracking-tight text-primary">{year} / 5</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl border-2 border-green-400/30">
-                  <p className="text-sm text-green-200 uppercase tracking-wider">Available Cash</p>
-                  <p className="text-3xl text-white tracking-tight">${portfolio.toFixed(0)}</p>
+                  <p className="text-sm text-green-200 uppercase tracking-wider text-primary">Available Cash</p>
+                  <p className="text-3xl text-white tracking-tight text-primary ">${portfolio.toFixed(0)}</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-2xl border-2 border-purple-400/30">
-                  <p className="text-sm text-purple-200 uppercase tracking-wider">Total Value</p>
-                  <p className="text-3xl text-white tracking-tight">${totalPortfolioValue.toFixed(0)}</p>
+                  <p className="text-sm text-purple-200 uppercase tracking-wider text-primary">Total Value</p>
+                  <p className="text-3xl text-white tracking-tight text-primary ">${totalPortfolioValue.toFixed(0)}</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
-                  <p className="text-sm text-yellow-200 uppercase tracking-wider">Return</p>
+                  <p className="text-sm text-yellow-200 uppercase tracking-wider text-primary">Return</p>
                   <p className={`text-3xl tracking-tight ${totalReturn >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                     {totalReturn >= 0 ? '+' : ''}{totalReturn.toFixed(1)}%
                   </p>
@@ -180,7 +180,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
               {/* Current Investments */}
               {investments.length > 0 && (
                 <div className="p-6 bg-slate-800/50 rounded-2xl border-2 border-white/10">
-                  <h3 className="text-xl text-white mb-4 tracking-tight flex items-center gap-2">
+                  <h3 className="text-xl text-white mb-4 tracking-tight flex items-center gap-2 text-primary">
                     Your Portfolio
                   </h3>
                   <div className="space-y-3">
@@ -235,10 +235,10 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
 
                 {selectedInvestment && (
                   <div className="p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                    <h4 className="text-white mb-4">Invest in {selectedInvestment.name}</h4>
+                    <h4 className="text-white mb-4 text-primary">Invest in {selectedInvestment.name}</h4>
                     <div className="flex gap-4 items-end">
                       <div className="flex-1">
-                        <label className="text-sm text-blue-200 mb-2 block">Amount to invest</label>
+                        <label className="text-sm text-blue-200 mb-2 block text-primary">Amount to invest</label>
                         <input
                           type="number"
                           value={investAmount || ''}
@@ -277,7 +277,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                       <Button
                         onClick={makeInvestment}
                         disabled={investAmount <= 0 || investAmount > portfolio}
-                        className="bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] px-8 py-6"
+                        className="bg-gradient-to-r from-[#004977] to-[#003D5C] hover:from-[#003D5C] hover:to-[#002D44] px-8 py-6 "
                       >
                         Invest
                       </Button>
@@ -291,14 +291,14 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 <Button
                   onClick={nextYear}
                   disabled={investments.length === 0}
-                  className="w-full bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-lg py-6 shadow-xl"
+                  className="w-full bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-lg py-6 shadow-xl text-primary"
                 >
                   Advance to Year {year + 1} →
                 </Button>
                 
                 <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
-                  <p className="text-yellow-100">
-                    💡 Pro Tip: Diversification (spreading investments across different types) helps reduce risk. Don't put all your money in one place!
+                  <p className="text-primary text-center ">
+                  Pro Tip: Diversification (spreading investments across different types) helps reduce risk. Don't put all your money in one place!
                   </p>
                 </div>
               </div>

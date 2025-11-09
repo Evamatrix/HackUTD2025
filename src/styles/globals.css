@@ -5,7 +5,7 @@
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(96.115% 0.00011 271.152);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: #030213;
@@ -187,3 +187,43 @@
 html {
   font-size: var(--font-size);
 }
+
+
+.custom-rounded {
+  border-radius: 1.5rem !important; /* or any value you want */
+  overflow: hidden; /* Ensures the corners are clipped correctly */
+}
+
+
+.custom-header {
+  background-color: rgb(242, 242, 242); /* Blue, or use any hex/rgb color */
+}
+
+
+.custom-card {
+  /* background: linear-gradient(to bottom right, #c9cbc8, #94f199); */
+  background-color: #ffffff; 
+  
+}
+
+
+
+.no-border {
+  border: none !important;
+}
+
+
+.header-spaced {
+  padding-bottom: 1.2rem; /* or your preferred value */
+}
+
+
+.text-primary {
+  color: #000000;
+}
+
+.text-secondary {
+  color: #a19e9e;
+}
+
+

@@ -77,16 +77,16 @@ export function MortgageGame({ onBack, onComplete }: MortgageGameProps) {
       {/* Inline back button (not floating) placed within page flow for consistency */}
       <GameBackButton onBack={onBack} />
 
-      <Card className="border-4 border-blue-300 bg-gradient-to-br from-white to-blue-50 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-b-4 border-blue-700">
-          <CardTitle className="flex items-center gap-3 text-2xl">
+      <Card className="shadow-2xl custom-rounded no-border custom-card">
+      <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+        <CardTitle className="text-3xl font-bold flex items-center gap-3">
             <div className="p-2 bg-white/30 rounded-xl">
               <Home className="w-7 h-7" />
             </div>
-            Cat's First Home 🏡
+            Cat's First Home 
           </CardTitle>
-          <CardDescription className="text-blue-100 text-base">
-            Learn about mortgages and how cats buy their dream homes! 🐱
+          <CardDescription className="text-blue-100 text-base text-primary ">
+            Learn about mortgages and how cats buy their dream homes! 
           </CardDescription>
         </CardHeader>
         <CardContent className="p-8 space-y-6">

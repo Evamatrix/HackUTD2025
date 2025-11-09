@@ -91,15 +91,15 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
       <GameBackButton onBack={onBack} />
 
 
-      <Card className="border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
-        <CardHeader className="bg-gradient-to-r from-[#004977] to-[#003D5C] text-white border-b-4 border-white/20">
-          <CardTitle className="flex items-center gap-3 text-2xl">
+    <Card className="shadow-2xl custom-rounded no-border custom-card">
+      <CardHeader className="text-white border-b-4 border-white/20 rounded-t-xl overflow-hidden custom-header flex flex-col items-center text-center header-spaced text-primary">
+        <CardTitle className="text-3xl font-bold flex items-center gap-3">
             <div className="p-2 bg-white/20 rounded-lg">
               <Sparkles className="w-7 h-7" />
             </div>
             Money Match
           </CardTitle>
-          <CardDescription className="text-blue-100 text-base">
+          <CardDescription className="text-blue-100 text-base text-primary ">
             Match each item with its correct price!
           </CardDescription>
         </CardHeader>
@@ -107,7 +107,7 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
           {!gameComplete ? (
             <>
               <div className="flex items-center justify-between bg-slate-800/50 p-4 rounded-xl">
-                <p className="text-sm text-blue-200 uppercase tracking-wider">
+                <p className="text-sm text-blue-200 uppercase tracking-wider text-primary ">
                   Matched: {matched.length} of {items.length}
                 </p>
                 <p className="text-sm text-green-300 uppercase tracking-wider">
@@ -116,7 +116,7 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
               </div>
 
               {showFeedback && (
-                <div className={`p-6 rounded-2xl text-center border-2 ${isCorrect ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-green-400/30' : 'bg-gradient-to-br from-red-500/20 to-rose-500/20 border-red-400/30'}`}>
+                <div className={`text-primary p-6 rounded-2xl text-center border-2 ${isCorrect ? 'bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-green-400/30' : 'bg-gradient-to-br from-red-500/20 to-rose-500/20 border-red-400/30'}`}>
                   <p className={`text-2xl ${isCorrect ? 'text-green-300' : 'text-red-300'}`}>
                     {isCorrect ? '🎉 Perfect Match!' : '❌ Try Again!'}
                   </p>
@@ -126,7 +126,7 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Items Column */}
                 <div>
-                  <h3 className="text-xl text-white mb-4 tracking-tight">Items</h3>
+                  <h3 className="text-xl text-white mb-4 tracking-tight text-primary ">Items</h3>
                   <div className="space-y-3">
                     {items.map((item) => {
                       const isMatched = matched.includes(item.id);
@@ -137,7 +137,7 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
                           key={item.id}
                           onClick={() => handleItemClick(item)}
                           disabled={isMatched || showFeedback}
-                          className={`w-full p-5 rounded-2xl border-2 transition-all transform flex items-center gap-4 ${
+                          className={`text-primary w-full p-5 rounded-2xl border-2 transition-all transform flex items-center gap-4 ${
                             isMatched
                               ? 'border-[#004977] bg-gradient-to-br from-blue-500/20 to-cyan-500/20 opacity-60'
                               : isSelected
@@ -146,7 +146,7 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
                           }`}
                         >
                           <span className="text-4xl">{item.emoji}</span>
-                          <span className="text-white text-lg">{item.name}</span>
+                          <span className="text-white text-lg text-primary ">{item.name}</span>
                           {isMatched && <span className="ml-auto text-green-400 text-2xl">✓</span>}
                         </button>
                       );
@@ -156,8 +156,8 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
 
                 {/* Prices Column */}
                 <div>
-                  <h3 className="text-xl text-white mb-4 tracking-tight">Prices</h3>
-                  <div className="space-y-3">
+                  <h3 className="text-xl text-white mb-4 tracking-tight text-primary">Prices</h3>
+                  <div className="space-y-3 text-primary ">
                     {shuffledPrices.map((price, index) => {
                       const isMatched = matched.some(id => items.find(item => item.id === id)?.price === price);
                       const isSelected = selectedPrice === price;
@@ -169,13 +169,13 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
                           disabled={isMatched || showFeedback}
                           className={`w-full p-5 rounded-2xl border-2 transition-all transform ${
                             isMatched
-                              ? 'border-[#004977] bg-gradient-to-br from-blue-500/20 to-cyan-500/20 opacity-60'
+                              ? 'border-[#004977] bg-gradient-to-br from-blue-500/20 to-cyan-500/20 opacity-60 '
                               : isSelected
                               ? 'border-[#004977] bg-gradient-to-br from-blue-500/20 to-cyan-500/20 scale-105 shadow-xl'
                               : 'border-white/10 bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105'
                           }`}
                         >
-                          <span className="text-blue-300 text-2xl">${price}</span>
+                          <span className="text-blue-300 text-2xl text-primary ">${price}</span>
                           {isMatched && <span className="ml-3 text-green-400 text-2xl">✓</span>}
                         </button>
                       );
@@ -185,22 +185,22 @@ export function MoneyMatchGame({ onBack, onComplete }: MoneyMatchGameProps) {
               </div>
 
               <div className="p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                <p className="text-sm text-blue-200">
+                <p className="text-sm text-blue-200 text-primary ">
                   💡 Pro Tip: Click an item on the left, then click its matching price on the right!
                 </p>
               </div>
             </>
           ) : (
             <div className="text-center space-y-6 py-8">
-              <div className="text-8xl mb-4">🏆</div>
-              <h3 className="text-4xl text-white tracking-tight">Challenge Complete!</h3>
+              <div className="text-primary text-8xl mb-4">🏆</div>
+              <h3 className="text-primary text-4xl text-white tracking-tight">Challenge Complete!</h3>
               <p className="text-xl text-blue-200">
                 You matched all items correctly!
               </p>
-              <p className="text-lg text-blue-300">
+              <p className="text-primary text-lg text-blue-300">
                 Attempts: {attempts} | Perfect Score: {items.length}
               </p>
-              <div className="p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
+              <div className="text-primary p-6 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl border-2 border-yellow-400/30">
                 <p className="text-yellow-100 text-lg">
                   💡 Pro Tip: Knowing real-world prices helps you make smart shopping decisions!
                 </p>
