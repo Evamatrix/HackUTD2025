@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 
-interface BudgetChallengeProps {
+export interface BudgetChallengeProps {
   onBack: () => void;
   onComplete: (points: number) => void;
 }
@@ -35,9 +35,9 @@ export function BudgetChallenge({ onBack, onComplete }: BudgetChallengeProps) {
   ];
 
   const handleItemClick = (item: Item) => {
-    if (selectedItems.some(i => i.name === item.name)) {
+    if (selectedItems.some((i: Item) => i.name === item.name)) {
       // Remove item
-      setSelectedItems(selectedItems.filter(i => i.name !== item.name));
+      setSelectedItems(selectedItems.filter((i: Item) => i.name !== item.name));
       setSpent(spent - item.cost);
     } else {
       // Add item if budget allows

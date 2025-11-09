@@ -2,6 +2,8 @@ import { Trophy, Sparkles, Target, Scale, Coins } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { TrendingUp } from 'lucide-react';
+// Import local cat icons
+// Icons are served from public/assets/icons - use public URLs (no static import needed)
 
 interface DashboardProps {
   userProgress: {
@@ -26,7 +28,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'savings' as const,
       title: 'Kitty Savings Bank',
       description: 'Help the cats save for big goals 🐱',
-      icon: '😸',
+      icon: '/assets/icons/piggy-cat.svg',
       emoji: '😸',
       color: 'from-amber-400 to-orange-500',
       bgPattern: 'from-amber-100 to-orange-100',
@@ -36,7 +38,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'budget' as const,
       title: 'Cat Budget Planner',
       description: 'Plan spending like a wise cat 🐈',
-      icon: '😺',
+      icon: '/assets/icons/budget-cat.svg',
       emoji: '😺',
       color: 'from-teal-500 to-emerald-600',
       bgPattern: 'from-teal-100 to-emerald-100',
@@ -46,7 +48,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'wantvsneed' as const,
       title: 'Paws & Priorities',
       description: 'Learn what cats need vs want 😻',
-      icon: '😻',
+      icon: '/assets/icons/book-cat.svg',
       emoji: '😻',
       color: 'from-purple-500 to-pink-600',
       bgPattern: 'from-purple-100 to-pink-100',
@@ -56,7 +58,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'moneymatch' as const,
       title: 'Meow Money Match',
       description: 'Match items with prices 😼',
-      icon: '😼',
+      icon: '/assets/icons/shopping-cat.svg',
       emoji: '😼',
       color: 'from-green-500 to-lime-600',
       bgPattern: 'from-green-100 to-lime-100',
@@ -66,7 +68,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'investing' as const,
       title: 'Cat Investment Garden',
       description: 'Grow wealth like planting seeds 🌱',
-      icon: '😽',
+      icon: '/assets/icons/deposit-cat.svg',
       emoji: '😽',
       color: 'from-rose-500 to-red-600',
       bgPattern: 'from-rose-100 to-red-100',
@@ -76,7 +78,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'debt' as const,
       title: 'Debt Dilemma',
       description: 'Learn to escape debt traps 😿',
-      icon: '😿',
+      icon: '/assets/icons/budget-cat.svg',
       emoji: '😿',
       color: 'from-rose-400 to-pink-600',
       bgPattern: 'from-rose-100 to-pink-100',
@@ -86,7 +88,7 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
       id: 'mortgage' as const,
       title: 'Cat\'s First Home',
       description: 'Understand mortgages & home buying 🏡',
-      icon: '🏠',
+      icon: '/assets/icons/main-cat.svg',
       emoji: '🏠',
       color: 'from-blue-500 to-cyan-600',
       bgPattern: 'from-blue-100 to-cyan-100',
@@ -204,7 +206,12 @@ export function Dashboard({ userProgress, onSelectGame }: DashboardProps) {
                     <div className="flex-1">
                       <CardTitle className="flex items-center gap-3 text-gray-900 text-xl mb-2">
                         <div className={`p-4 rounded-2xl bg-gradient-to-r ${game.color} shadow-lg group-hover:scale-110 transition-transform`}>
-                          <span className="text-3xl">{game.emoji}</span>
+                          <img
+                            src={game.icon}
+                            alt={game.title}
+                            className="object-contain"
+                            style={{ width: 54, height: 54 }}
+                          />
                         </div>
                         {game.title}
                       </CardTitle>
