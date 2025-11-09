@@ -96,11 +96,11 @@ export default function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
-                <span className="text-4xl">🐱</span>
+                <img src="/assets/icons/main-cat.svg" alt="Main Cat" className="w-12 h-12 object-contain" />
               </div>
               <div>
                 <h1 className="text-3xl tracking-tight flex items-center gap-2">
-                  Money Cats 
+                  Capital Meow-ney 
                   <span className="text-2xl">🐾</span>
                 </h1>
                 <p className="text-sm text-emerald-100 tracking-wide">POWERED BY CAPITAL ONE</p>
