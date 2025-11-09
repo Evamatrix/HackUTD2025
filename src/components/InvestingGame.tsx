@@ -191,7 +191,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
           {!gameComplete ? (
             <>
               {/* Portfolio Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-primary">
                 <div className="p-4 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
                   <p className="text-sm text-blue-200 uppercase tracking-wider text-primary">Year</p>
                   <p className="text-3xl text-white tracking-tight text-primary">{year} / 5</p>
@@ -208,7 +208,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                   <p className="text-sm text-purple-200 uppercase tracking-wider text-primary">
                     Total Value
                   </p>
-                  <p className="text-3xl text-white tracking-tight text-primary">
+                  <p className="text-3xl text-white tracking-tight text-primary text-primary">
                     ${totalPortfolioValue.toFixed(0)}
                   </p>
                 </div>
@@ -244,7 +244,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                             <span className="text-3xl">{item.investment.emoji}</span>
                             <div>
                               <p className="text-white">{item.investment.name}</p>
-                              <p className="text-sm text-blue-300">
+                              <p className="text-sm text-blue-300 text-secondary2">
                                 <span className={getRiskColor(item.investment.risk)}>
                                   {item.investment.risk} risk
                                 </span>
@@ -276,9 +276,9 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                           : 'border-white/10 bg-slate-800/50 hover:border-[#004977] hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-cyan-500/10 hover:scale-105'
                       }`}
                     >
-                      <div className="text-4xl mb-3">{investment.emoji}</div>
-                      <p className="text-white mb-1">{investment.name}</p>
-                      <p className="text-sm text-blue-300 mb-2">{investment.description}</p>
+                      <div className="text-4xl mb-3 ">{investment.emoji}</div>
+                      <p className="text-white mb-1 text-primary">{investment.name}</p>
+                      <p className="text-sm text-blue-500 mb-2">{investment.description}</p>
                       <div className="flex items-center justify-between text-sm">
                         <span className={getRiskColor(investment.risk)}>{investment.risk} risk</span>
                         <span className="text-green-400">
@@ -291,12 +291,12 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
 
                 {selectedInvestment && (
                   <div className="p-6 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border-2 border-blue-400/30">
-                    <h4 className="text-white mb-4 text-primary">
+                    <h4 className="text-black mb-4 text-primary">
                       Invest in {selectedInvestment.name}
                     </h4>
                     <div className="flex gap-4 items-end">
                       <div className="flex-1">
-                        <label className="text-sm text-blue-200 mb-2 block text-primary">
+                        <label className="text-sm text-blue-500 mb-2 block text-primary">
                           Amount to invest
                         </label>
                         <input
@@ -308,7 +308,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                             )
                           }
                           placeholder="Enter amount"
-                          className="w-full px-4 py-3 rounded-xl bg-slate-800 border-2 border-white/10 text-white"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-800 border-2 border-white/10 text-white text-primary"
                           max={portfolio}
                         />
                         <div className="flex gap-2 mt-2">
@@ -345,7 +345,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
                 <Button
                   onClick={nextYear}
                   disabled={investments.length === 0}
-                  className="w-full bg-gradient-to-r from-[#DA2032] to-[#B01828] hover:from-[#B01828] hover:to-[#901420] text-lg py-6 shadow-xl text-primary"
+                  className="w-full btn-solid-red text-lg py-6 shadow-xl text-primary"
                 >
                   Advance to Year {year + 1} →
                 </Button>
@@ -389,7 +389,7 @@ export function InvestingGame({ onBack, onComplete }: InvestingGameProps) {
               </div>
 
               {/* CAGR Display */}
-              <div className="p-4 bg-slate-700/50 rounded-xl max-w-md mx-auto">
+              <div className="p-4 bg-slate-700/50 rounded-xl max-w-md mx-auto text-primary">
                 <p className="text-sm text-blue-300">Average Annual Return (CAGR)</p>
                 <p
                   className={`text-2xl ${

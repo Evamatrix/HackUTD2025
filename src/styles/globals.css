@@ -227,3 +227,19 @@ html {
 }
 
 
+.text-secondary2 {
+  color: #97dd91;
+}
+
+.btn-bg {
+  background-color: #e3e6eb; /* or your preferred color */
+}
+
+
+.btn-solid-red {
+  background-color: #dcdcdc;
+}
+
+.btn-solid-red:hover {
+  background-color: #c9c9c9;
+}
