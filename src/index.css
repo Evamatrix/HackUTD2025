@@ -23,6 +23,16 @@
   font-weight: normal;
   font-style: normal;
 }
+
+/* Load Comic Sans font */
+@font-face {
+  font-family: 'Comic Sans MS';
+  src: url('/assets/comici.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 /* Hide scrollbar but keep scrolling */
 html, body {
   overflow: auto;       /* scrolling still works */
