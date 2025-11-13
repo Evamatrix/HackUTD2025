@@ -27,7 +27,7 @@
 /* Load Comic Sans font */
 @font-face {
   font-family: 'Comic Sans MS';
-  src: url('/assets/COMIC.ttf') format('truetype');
+  src: url('/assets/COMIC.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
